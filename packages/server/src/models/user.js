@@ -2,11 +2,6 @@ import mongoose from 'mongoose'
 const { ObjectId } = mongoose.Schema.Types
 
 const userSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    unique: true,
-    required: true,
-  },
   name:{
     type: String,
     required: true,
@@ -16,11 +11,11 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
     },
-    passwordHash:{
+  passwordHash:{
     type: String,
-    required:true,
+    required: false,
     },
-    userType:{
+  userType:{
       type: String,
     },
 })
