@@ -12,6 +12,25 @@ router.get('/:businessId', async (req, res) => {
     }
 })
 
+router.put('/', async (req, res) => {
+    try {
+        const updatedBusiness = await Business.findByIdAndUpdate(
+            {
+                _id: req.body.businessId
+            },
+            {
+                businessName: req.body.businessName
+            },
+            {
+                new: true
+            }
+        )
+        res.json(updatedBusiness.toJSON())
+    } catch {
+        res.status.apply(404).end()
+    }
+})
+
 router.post('/', async (req, res) => {
     const business = new Business({
         businessName: req.body.name
