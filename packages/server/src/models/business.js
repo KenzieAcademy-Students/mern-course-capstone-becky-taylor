@@ -4,29 +4,34 @@ const { ObjectId } = mongoose.Schema.Types
 const businessSchema = new mongoose.Schema({
     businessName: {
 		type: String,
-		unique: true,
-		required: true,
+		required: true
+    },
+    businessURL: {
+        type: String,
+        unique: true
     },
     logo: {
-        type: String,
+        type: String
     },
     businessDescription: {
-        type: String,
+        type: String
     },
     address1: {
-        type: String,
+        type: String
     },
     address2: {
-        type: String,
+        type: String
     },
     city: {
         type: String,
+		required: true
     },
     stateZip: {
         type:Number,
+		required: true
     },
     phone: {
-        type: Number,
+        type: Number
     },
     brandColor: {
         type: String,
