@@ -6,13 +6,8 @@ const productSchema = new mongoose.Schema({
             type: String,
             required: true
     },
-    productId: {
-        type: String,
-        unique: true,
-        required: true
-    },
     description: {
-        type: String,
+        type: String
     },
     price: {
         type: Number,
@@ -31,7 +26,9 @@ const productSchema = new mongoose.Schema({
             ref: 'Category'
         }
     ]
-    })
+    },
+    { timestamps: true }
+)
     
 
 const Product = mongoose.model('Product', productSchema)
