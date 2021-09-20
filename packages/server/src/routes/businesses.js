@@ -12,6 +12,16 @@ router.get('/:businessId', async (req, res) => {
     }
 })
 
+router.get('/by-name/:businessURL', async (req, res) => {
+    const business = await Business.findOne({businessURL: req.params.businessURL})
+
+    if (business) {
+        res.json(business.toJSON())
+    } else {
+        res.status(404).end()
+    }
+})
+
 router.put('/', async (req, res) => {
     try {
         const updatedBusiness = await Business.findByIdAndUpdate(
