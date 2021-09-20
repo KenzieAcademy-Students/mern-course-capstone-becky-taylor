@@ -1,6 +1,6 @@
 import express from 'express'
 import productRouter from './products'
-
+import businessRouter from './businesses'
 
 const router = express.Router()
 
@@ -9,5 +9,6 @@ router.get('/', (req, res, next) => {
 })
 
 router.use('/products', productRouter)
+router.use('/businesses', businessRouter)
 
 module.exports = router
