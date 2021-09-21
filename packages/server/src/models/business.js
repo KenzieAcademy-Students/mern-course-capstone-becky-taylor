@@ -31,7 +31,8 @@ const businessSchema = new mongoose.Schema({
 		required: true
     },
     phone: {
-        type: Number
+        type: Number,
+        required: true
     },
     brandColor: {
         type: String,
