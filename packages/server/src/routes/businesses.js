@@ -29,7 +29,17 @@ router.put('/', async (req, res) => {
                 _id: req.body.businessId
             },
             {
-                businessName: req.body.businessName
+                businessName: req.body.businessName,
+                logo: req.body.logo,
+                businessDescription: req.body.businessDescription,
+                address1: req.body.address1,
+                address2: req.body.address2,
+                city: req.body.city,
+                stateZip: req.body.stateZip,
+                phone: req.body.phone,
+                brandColor: req.body.brandColor,
+                products: req.body.products,
+                categories: req.body.categories
             },
             {
                 new: true
@@ -43,7 +53,12 @@ router.put('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const business = new Business({
-        businessName: req.body.name
+        businessName: req.body.name,
+        address1: req.body.address1,
+        address2: req.body.address2,
+        city: req.body.city,
+        stateZip: req.body.stateZip,
+        phone: req.body.phone
     })
     console.log(business)
     try {
