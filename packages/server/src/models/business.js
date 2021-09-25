@@ -41,7 +41,7 @@ const businessSchema = new mongoose.Schema({
         {
             type: ObjectId,
             ref: 'Product',
-        },
+        }
     ],
     categories: [
         {
