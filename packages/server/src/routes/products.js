@@ -1,5 +1,6 @@
 import { Product } from '../models'
 import express from 'express'
+import path from 'path'
 const router = express.Router()
 
 
@@ -32,17 +33,17 @@ router.get('/:id', async (request, response) => {
 
 router.post('/', async (request, response) => {
   /* will need to add
-  image
   categories
   */
-  const { name, description, price, quantity } = request.body
+  const { name, description, price, quantity, productImage } = request.body
   
   try {
     const product = new Product({
       productName: name,
       description: description,
       price: price,
-      quantity: quantity
+      quantity: quantity,
+      productImage: productImage,
     })
     
     const savedProduct = await product.save()
@@ -52,12 +53,35 @@ router.post('/', async (request, response) => {
   }
 })
 
+router.post('/upload-image', async (request, response) => {
+  try {
+      
+      if(!request.files) {
+          response.status(400).json({message: "No file uploaded."})
+      } else {
+          
+          let productImageUpload = request.files.product_image_upload
+          
+          const uploadPath = path.join(__dirname, '../../../client/') + 'public/images/products/' + productImageUpload.name
+          
+          productImageUpload.mv(uploadPath, function(error) {            
+            if (error) {
+              return response.status(500).json({message: error})
+            }
+            response.status(200).json({filePath: `/images/products/${productImageUpload.name}`})
+          });          
+      }
+  } catch (error) {
+      console.dir(error)
+      response.status(500).json({message: error})
+  }
+});
+
 router.put('/:id', async (request, response) => {
   /* will need to add
-  image
   categories
   */
-  const { name, description, price, quantity } = request.body
+  const { name, description, price, quantity, productImage } = request.body
   const productId = request.params.id
 
   try {
@@ -69,7 +93,8 @@ router.put('/:id', async (request, response) => {
         name: name,
         description: description,
         price: price,
-        quantity: quantity
+        quantity: quantity,
+        productImage: productImage
       },
       {
         new: true,
@@ -83,7 +108,7 @@ router.put('/:id', async (request, response) => {
 })
 
 /*
-delete with authorization - kept this hear for future reference once we get auth set up
+delete with authorization - kept this here for future reference once we get auth set up
 router.delete('/:id', requireAuth, async (request, response) => {
 */
 router.delete('/:id', async (request, response) => {
