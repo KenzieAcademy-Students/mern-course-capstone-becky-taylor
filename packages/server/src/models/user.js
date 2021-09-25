@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema({
   userType:{
       type: String,
     },
+    business: [
+      {
+        type: ObjectId,
+        ref: 'Business'
+      }
+    ]
 })
 
 const User = mongoose.model('User', userSchema)
