@@ -17,7 +17,8 @@ router
 })
 
 //Getting One
-router.get('/:id', getUser, (req, res) => {
+router.get('/:id', getUser, (req, res) => { 
+  req.params.id
   res.json(res.user)
 })
 
@@ -39,13 +40,13 @@ router.post('/', async (req, res)=>{
 // Updating User
 router.patch('/:id', getUser, async (req, res) => {
  if (req.body.name !== null) {
-   res.user.name = req.body.name
+   res.id.name = req.body.name
  }
  if (req.body.email !== null) {
-  res.user.email = req.body.email
+  res.id.email = req.body.email
  }
  try {
-   const updatedUser = await res.user.save()
+   const updatedUser = await res.id.save()
    res.json(updatedUser)
  } catch (err) {
    res.status(400).json({ message: err.message })
@@ -64,7 +65,7 @@ router.delete('/:id', getUser, async (req, res) => {
 
 // Middleware
 async function getUser(req, res, next) {
-let user
+  let user
   try {
     user = await User.findById(req.params.id)
     if(user === null) {

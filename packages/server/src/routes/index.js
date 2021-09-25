@@ -1,7 +1,6 @@
 import express from 'express'
 import productRouter from './products'
 import usersRouter from './users'
-
 import businessRouter from './businesses'
 
 const router = express.Router()
