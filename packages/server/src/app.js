@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import fileUpload from 'express-fileupload'
 import keys from './config/keys'
 import router from './routes'
 import { requestLogger, errorHandler } from './middleware'
@@ -34,6 +35,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(fileUpload())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(requestLogger)
 
