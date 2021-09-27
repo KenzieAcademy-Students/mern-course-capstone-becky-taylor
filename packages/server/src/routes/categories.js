@@ -1,10 +1,10 @@
 import express from 'express'
 const router = express.Router()
-import { Categories} from '../models'
+import { Category } from '../models'
 
 router.get('/', async (req, res) => {
     try {
-        const categories = await Categories.find({})
+        const categories = await Category.find({})
     
         response.json(categories.map((categories) => categories.toJSON()))
       } catch (error) {
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const categories = await Categories.findById(request.params.id)
+    const categories = await Category.findById(request.params.id)
 
     if (categories) {
       response.json(categories.toJSON())
@@ -33,8 +33,7 @@ router.post('/', async (request, response) => {
   
   try {
     const category = new Category({
-      categoryName: name,
-      categoryId: id
+      categoryName: name
     })
     
     const saveCategory = await category.save()
@@ -43,4 +42,5 @@ router.post('/', async (request, response) => {
     response.status(404).end()
   }
 })
+
 module.exports = router
