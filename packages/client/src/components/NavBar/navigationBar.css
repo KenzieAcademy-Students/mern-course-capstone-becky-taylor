@@ -1,0 +1,21 @@
+.navbar{
+    background: linear-gradient(120deg, #9b9b9c78, #32303878);
+    border-radius: 10px;
+}
+.imageLogo{
+    border-radius: 20px;
+    background: linear-gradient(120deg, #9b9b9c78, #32303878)
+}
+.me-auto{
+    display: flex;
+    text-align: center;
+}
+.navbar-container{
+    background: linear-gradient(0.25turn, #350c0ce0, #f77904cc, #350c0ce0)
+}
+.Link{
+    color:rgb(255, 177, 87);
+}
+.Link:hover{
+    color: rgba(240, 243, 57, 0.815);
+}

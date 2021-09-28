@@ -8,7 +8,6 @@ const businessSchema = new mongoose.Schema({
     },
     businessURL: {
         type: String,
-        unique: true
     },
     logo: {
         type: String
