@@ -34,13 +34,13 @@ const businessSchema = new mongoose.Schema({
         required: true
     },
     brandColor: {
-        type: String,
+        type: String
     },
     products: [
         {
             type: ObjectId,
-            ref: 'Product',
-        },
+            ref: 'Product'
+        }
     ],
     categories: [
         {
