@@ -8,7 +8,7 @@ export default function HomePage(props) {
   return (
     <main>
       <h1>BONGO</h1>
-      <h2>He can do it. So can you.</h2>
+      <h2 class="header">He can do it. So can you.</h2>
       { error && <h3 style={{color:"red"}}>Error Loading Data: {error}</h3>}
       { isLoading &&  <LoadingSpinner></LoadingSpinner>}
       { !error && response && (
