@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import './ProductsList.css'
-import { useApiFetch } from "util/api"
+import axios from 'util/axiosConfig.js'
 import ProductDetails from 'components/ProductDetails'
 
 function ProductsList({ }) {
-  const {error, response} = useApiFetch("/products", {method: "GET"})
-  const {products, setProducts} = useState([])
-  /*useEffect(() => {
-      
+  const [products, setProducts] = useState([])
+  const [error, setError] = useState("")
+  useEffect(() => {
+    const getProducts = async () => {
       try {
-        const res = useApiFetch("/products", {method: "GET"})
-        setProducts(res)
+        const allProducts = await axios.get('products')
+
+        console.dir(allProducts.data)
         
-      } catch (error) {
-        console.log(error)
+        //setProducts(allProducts.data)
+        
+      } catch (err) {
+        console.error(err.message)
+        //setError(err)
       }
-   
-  }, []);*/
+    }
+    getProducts()
+  }, [])
   
 
   return (
     <div>
       Hello from Products List
       { error && <h3 style={{color:"red"}}>Error Loading Data: {error}</h3>}
-      { !error && response && (
-        <div>Products: {response}</div>
+      { !error && products && (
+        <div>Products: {products}</div>
       )}
       <ProductDetails />
     </div>

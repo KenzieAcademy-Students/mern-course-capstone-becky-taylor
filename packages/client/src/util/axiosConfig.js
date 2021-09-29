@@ -19,7 +19,7 @@ instance.interceptors.request.use(
   function (config) {
     const token = getUserToken()
     if (token) {
-      config.headers['Authorization'] = 'Bearer ' + token
+      config.headers['Authorization'] = 'Bearer ' + token 
     }
     return config
   },
