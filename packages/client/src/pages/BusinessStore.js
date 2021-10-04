@@ -6,7 +6,6 @@ export default function BusinessStore(props) {
 
   return (
     <div>
-      Hello from store
       <BusinessInfo />
       <ProductsList />
     </div>
