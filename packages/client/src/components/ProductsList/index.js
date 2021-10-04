@@ -3,6 +3,7 @@ import { Card, Button, Modal } from 'react-bootstrap'
 import './ProductsList.css'
 import axios from 'util/axiosConfig.js'
 import ProductDetails from 'components/ProductDetails'
+import ProductForm from 'components/ProductForm'
 
 function ProductsList({ }) {
   const [error, setError] = useState("")
@@ -19,6 +20,11 @@ function ProductsList({ }) {
   const handleShowDelModal = (deleteProduct) => {
     setCurrentProduct(deleteProduct)
     setDelShow(true)
+  }
+
+  const handleProductChange = (productData) => {
+    console.log("Product changed")
+    setEditShow(false)
   }
 
   useEffect(() => {
@@ -77,7 +83,7 @@ function ProductsList({ }) {
             Edit Product
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>{currentProduct.productName}</Modal.Body>
+        <Modal.Body><ProductForm product={currentProduct} handleProductChange={handleProductChange} /></Modal.Body>
       </Modal>
 
       <Modal size="lg" show={delShow}
