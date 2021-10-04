@@ -9,7 +9,8 @@ router.get('/', async (request, response) => {
   try {
     const products = await Product.find({})
 
-    response.json(products.map((products) => products.toJSON()))
+    response.json(products.map((product) => product.toJSON()))
+    
   } catch (error) {
     response.status(404).end()
   }
@@ -81,7 +82,7 @@ router.put('/:id', async (request, response) => {
   /* will need to add
   categories
   */
-  const { name, description, price, quantity, productImage } = request.body
+  const { name, description, price, quantity, image } = request.body
   const productId = request.params.id
 
   try {
@@ -94,7 +95,7 @@ router.put('/:id', async (request, response) => {
         description: description,
         price: price,
         quantity: quantity,
-        productImage: productImage
+        image: image
       },
       {
         new: true,
