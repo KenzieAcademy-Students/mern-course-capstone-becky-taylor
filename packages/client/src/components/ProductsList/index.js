@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from 'react'
+import { Card, Button, Modal } from 'react-bootstrap'
 import './ProductsList.css'
 import axios from 'util/axiosConfig.js'
 import ProductDetails from 'components/ProductDetails'
 
 function ProductsList({ }) {
-  const [products, setProducts] = useState([])
   const [error, setError] = useState("")
+  const [products, setProducts] = useState([])
+  const [editShow, setEditShow] = useState(false)
+  const [delShow, setDelShow] = useState(false)
+  const [currentProduct, setCurrentProduct] = useState("")
+  
+  const handleShowEditModal = (editProduct) => {
+    setCurrentProduct(editProduct)
+    setEditShow(true)
+  }
+
+  const handleShowDelModal = (deleteProduct) => {
+    setCurrentProduct(deleteProduct)
+    setDelShow(true)
+  }
+
   useEffect(() => {
     const getProducts = async () => {
       try {
         const allProducts = await axios.get('products')
-
-        console.dir(allProducts.data)
+        const displayProducts = allProducts.data        
         
-        //setProducts(allProducts.data)
+        setProducts([...displayProducts])
         
       } catch (err) {
         console.error(err.message)
-        //setError(err)
+        setError(err)
       }
     }
     getProducts()
@@ -26,13 +40,59 @@ function ProductsList({ }) {
 
   return (
     <div>
-      Hello from Products List
       { error && <h3 style={{color:"red"}}>Error Loading Data: {error}</h3>}
+      <Card style={{ width: '100rem', border: '0px' }}>
+        <Card.Body>
+          <Card.Text>
+          <b>Category 1</b> <Button variant="success">Edit</Button>
+          </Card.Text>
+        </Card.Body>
+      </Card>
       { !error && products && (
-        <div>Products: {products}</div>
+        <div>{products.map((product) => (
+          <ProductDetails handleShowEditModal={handleShowEditModal} handleShowDelModal={handleShowDelModal} key={product._id} product={product} />
+        ))}</div>
       )}
-      <ProductDetails />
-    </div>
+
+      <Card style={{ width: '100rem', border: '0px' }}>
+        <Card.Body>
+          <Card.Text>
+          <b>Category 2</b> <Button variant="success">Edit</Button>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+      { !error && products && (
+        <div>{products.map((product) => (
+          <ProductDetails handleShowEditModal={handleShowEditModal} handleShowDelModal={handleShowDelModal} key={product._id} product={product} />
+        ))}</div>
+      )}
+      
+
+      <Modal size="lg" show={editShow}
+        onHide={() => setEditShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            Edit Product
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{currentProduct.productName}</Modal.Body>
+      </Modal>
+
+      <Modal size="lg" show={delShow}
+        onHide={() => setDelShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            Delete Product
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete {currentProduct.productName}?</Modal.Body>
+      </Modal>
+      
+    </div>    
   )
 }
 
