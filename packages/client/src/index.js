@@ -15,7 +15,6 @@ ReactDOM.render(
         <Route exact path='/' component={HomePage} />
         <Route exact path='/User/:id' component={UserProfile} />
         <Route exact path='/store' component={BusinessStore} />
-        { /* Add more routes here */} 
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,
