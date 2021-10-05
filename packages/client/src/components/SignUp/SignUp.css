@@ -1,0 +1,49 @@
+.modalBackground{
+    width:100vw;
+    height: 100vh;
+    background-color: grey;
+    position: fixed;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+#titleCloseBtn{
+    display: flex;
+    justify-content: flex-start;
+    background-color: crimson;
+}
+#titleCloseBtn:hover{
+    background-color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+.modalContainer{
+    width: 500px;
+    height: 500px;
+    border-radius: 12px;
+    background-image: linear-gradient(120deg, yellow, brown);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+}
+#cncl-Btn{
+    background-color: crimson;
+}
+#cncl-Btn:hover{
+    background-color:red;
+    font-size: 18px;
+    font-weight: bold;
+}
+#sign-Btn:hover{
+    background-color:cyan;
+    font-size: 18px;
+    font-weight: bold;
+}
+.form-label{
+font-size: 18px;
+font-weight: bold;
+}
+.card-Container{
+    background-color:rgb(255, 255, 58);
+}
