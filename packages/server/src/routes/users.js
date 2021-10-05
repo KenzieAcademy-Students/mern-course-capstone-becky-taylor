@@ -24,10 +24,7 @@ router.get('/:id', getUser, (req, res) => {
 
 //Creating one
 router.post('/', async (req, res)=>{
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email
-  })
+  const user = new User()
   try {
     const newUser = await user.save()
     

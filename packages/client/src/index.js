@@ -5,12 +5,11 @@ import HomePage from './pages/HomePage'
 import UserProfile from './pages/UserProfile'
 import BusinessStore from 'pages/BusinessStore'
 import './index.css'
-import NavBar from './components/NavBar'
+
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter> 
-    <NavBar/> 
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/User/:id' component={UserProfile} />
