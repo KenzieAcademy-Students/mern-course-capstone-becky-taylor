@@ -7,6 +7,7 @@ import ProductForm from 'components/ProductForm'
 
 function ProductsList({ }) {
   const [error, setError] = useState("")
+  const [loggedIn, setLoggedIn] = useState(true)
   const [products, setProducts] = useState([])
   const [editShow, setEditShow] = useState(false)
   const [delShow, setDelShow] = useState(false)
@@ -64,26 +65,34 @@ function ProductsList({ }) {
       <Card style={{ width: '100rem', border: '0px' }}>
         <Card.Body>
           <Card.Text>
-          <b>Category 1</b> <Button variant="success">Edit</Button>
+          <b>Category 1</b> 
+          {loggedIn && (
+            <div>
+              <Button variant="success">Edit</Button>
+            </div>)}
           </Card.Text>
         </Card.Body>
       </Card>
       { !error && products && (
         <div>{products.map((product) => (
-          <ProductDetails handleShowEditModal={handleShowEditModal} handleShowDelModal={handleShowDelModal} key={product._id} product={product} />
+          <ProductDetails handleShowEditModal={handleShowEditModal} handleShowDelModal={handleShowDelModal} key={product._id} product={product} loggedIn={loggedIn} />
         ))}</div>
       )}
 
       <Card style={{ width: '100rem', border: '0px' }}>
         <Card.Body>
           <Card.Text>
-          <b>Category 2</b> <Button variant="success">Edit</Button>
+          <b>Category 2</b> 
+          {loggedIn && (
+            <div>
+              <Button variant="success">Edit</Button>
+            </div>)}
           </Card.Text>
         </Card.Body>
       </Card>
       { !error && products && (
         <div>{products.map((product) => (
-          <ProductDetails handleShowEditModal={handleShowEditModal} handleShowDelModal={handleShowDelModal} key={product._id} product={product} />
+          <ProductDetails handleShowEditModal={handleShowEditModal} handleShowDelModal={handleShowDelModal} key={product._id} product={product} loggedIn={loggedIn} />
         ))}</div>
       )}
 
