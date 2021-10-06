@@ -11,6 +11,7 @@ function ProductsList({ }) {
   const [editShow, setEditShow] = useState(false)
   const [delShow, setDelShow] = useState(false)
   const [currentProduct, setCurrentProduct] = useState("")
+  const [refreshList, setRefreshList] = useState(false)
   
   const handleShowEditModal = (editProduct) => {
     setCurrentProduct(editProduct)
@@ -21,9 +22,21 @@ function ProductsList({ }) {
     setCurrentProduct(deleteProduct)
     setDelShow(true)
   }
+  const handleDelete = async () => {
+    
+    try {
 
-  const handleProductChange = (productData) => {
-    console.log("Product changed")
+      const deleteProduct = await axios.delete(`products/${currentProduct._id}`)
+      setRefreshList(true)
+      setDelShow(false)
+
+    } catch (err) {
+      console.log("there has been an error.")
+    }    
+  }
+
+  const handleProductChange = async () => {
+    setRefreshList(true)
     setEditShow(false)
   }
 
@@ -34,6 +47,7 @@ function ProductsList({ }) {
         const displayProducts = allProducts.data        
         
         setProducts([...displayProducts])
+        setRefreshList(false)
         
       } catch (err) {
         console.error(err.message)
@@ -41,7 +55,7 @@ function ProductsList({ }) {
       }
     }
     getProducts()
-  }, [])
+  }, [refreshList])
   
 
   return (
@@ -72,6 +86,15 @@ function ProductsList({ }) {
           <ProductDetails handleShowEditModal={handleShowEditModal} handleShowDelModal={handleShowDelModal} key={product._id} product={product} />
         ))}</div>
       )}
+
+      <Card style={{ width: '60rem', border: '0px' }}>
+        <Card.Body>
+          <Card.Text>
+          <b>New Product</b> 
+          <ProductForm product="" handleProductChange={handleProductChange} />
+          </Card.Text>
+        </Card.Body>
+      </Card>
       
 
       <Modal size="lg" show={editShow}
@@ -95,7 +118,10 @@ function ProductsList({ }) {
             Delete Product
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete {currentProduct.productName}?</Modal.Body>
+        <Modal.Body>
+          <p>Are you sure you want to delete the following product? {currentProduct.productName}</p>
+          <Button variant="success" onClick={handleDelete}>Yes</Button> <Button variant="danger" onClick={() => {setDelShow(false)}}>No</Button>
+        </Modal.Body>
       </Modal>
       
     </div>    
