@@ -1,5 +1,13 @@
 #business-info {
+    padding: 15px;
+    border-bottom: 1px solid black;
     display: flex;
+}
+
+#business-text {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 #business-name {
