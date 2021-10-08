@@ -1,0 +1,28 @@
+#edtBtn{
+    background-color: transparent;
+}
+
+#edtBtn:hover{
+    background-color:black;
+}
+
+#business-form{
+    border: 5px outset rgba(216, 2, 2, 0.719);
+    background-color: rgb(20, 9, 9);
+    box-shadow: 3px 3px rgba(44, 15, 15, 0.466), -1rem 0 .4em rgba(34, 34, 26, 0.651);
+   
+}
+
+ .formGroup{
+    background-image: linear-gradient(to bottom right, yellow, rgb(207, 41, 41));
+    font-family: status-bar;
+}
+
+#sbMt-Btn{
+    background-color: transparent;
+}
+#sbMt-Btn:hover{
+background-color:rgb(241, 46, 46);
+}
+
+
