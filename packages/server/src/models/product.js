@@ -3,8 +3,8 @@ const { ObjectId } = mongoose.Schema.Types
 
 const productSchema = new mongoose.Schema({
     productName: {
-            type: String,
-            required: true
+        type: String,
+        required: true
     },
     description: {
         type: String
@@ -20,12 +20,9 @@ const productSchema = new mongoose.Schema({
     image: {
         type: String
     },
-    categories: [
-        {
-            type: ObjectId,
-            ref: 'Category'
-        }
-    ]
+    category: {
+        type: String
+    }
     },
     { timestamps: true }
 )

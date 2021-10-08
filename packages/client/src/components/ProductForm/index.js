@@ -9,8 +9,10 @@ function ProductForm({ product, handleProductChange, business }) {
   const [productDescription, setProductDescription] = useState("")
   const [productPrice, setProductPrice] = useState("")
   const [productQuantity, setProductQuantity] = useState("")
+  const [productCategory, setProductCategory] = useState("")
   const [uploadedFile, setUploadedFile] = useState()
   const [imageURL, setImageURL] = useState("")
+  const [categoriesArray, setCategoriesArray] = useState([])
   
   const handleImageUpload = (e) => {
     // call the image upload route here
@@ -31,6 +33,9 @@ function ProductForm({ product, handleProductChange, business }) {
         break;
       case "productQuantity":
         setProductQuantity(e.target.value)
+        break;
+      case "productCategory":
+        setProductCategory(e.target.value)
         break;
       default:
         console.error("Unknown form field: ", e.target.name)
@@ -67,6 +72,7 @@ function ProductForm({ product, handleProductChange, business }) {
             productDescription: productDescription, 
             productPrice: productPrice, 
             productQuantity: productQuantity, 
+            productCategory: productCategory,
             productImage: upload_path || imageURL })
 
         // since the products are tied by reference to the business, no need to update the business data on a product update
@@ -77,6 +83,7 @@ function ProductForm({ product, handleProductChange, business }) {
             productDescription: productDescription, 
             productPrice: productPrice, 
             productQuantity: productQuantity, 
+            productCategory: productCategory,
             productImage: upload_path || imageURL })
 
         // append new product to business products array and update business
@@ -115,16 +122,31 @@ function ProductForm({ product, handleProductChange, business }) {
     handleProductChange()
   }
 
+  const categoryOptions = categoriesArray.map((category) => {
+    return (
+      <option key={category._id} value={category._id}>
+        {category.categoryName}
+      </option>
+    )
+  })
+
   useEffect(() => {
     const loadProduct = async () => {
       try {
         if(product){
+
           setProductName(product.productName)
           setProductDescription(product.description)
           setProductPrice(product.price)
           setProductQuantity(product.quantity)
           setImageURL(product.image)
           setProductId(product._id)
+          setCategoriesArray(business.categories)
+
+        } else {    
+
+          setCategoriesArray(business.categories)
+          
         }
 
       } catch (err) {
@@ -182,13 +204,24 @@ function ProductForm({ product, handleProductChange, business }) {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="productImage">
-      <Form.Label>Upload a Product Image</Form.Label>
-      <Form.Control 
-        type="file" 
-        name="productImage"
-        accept="file"
-        onChange={handleImageUpload}
-        />
+        <Form.Label>Upload a Product Image</Form.Label>
+        <Form.Control 
+          type="file" 
+          name="productImage"
+          accept="file"
+          onChange={handleImageUpload}
+          />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="productCategory">
+        <Form.Label>Product Category</Form.Label>
+        
+        <Form.Control as="select" name="productCategory" value={productCategory} onChange={handleInputChange}>
+          <option>Select a category</option>
+          {categoryOptions}
+        </Form.Control>
+
+
       </Form.Group>
 
       <Button variant="primary" type="submit">
