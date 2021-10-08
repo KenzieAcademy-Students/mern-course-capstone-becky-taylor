@@ -13,7 +13,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/User/:id' component={UserProfile} />
-        <Route exact path='/store' component={BusinessStore} />
+        <Route exact path='/store/:businessURL' component={BusinessStore} />
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,
