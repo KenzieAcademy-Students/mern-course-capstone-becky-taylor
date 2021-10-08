@@ -32,7 +32,7 @@ function ProductDetails({ product, handleShowEditModal, handleShowDelModal, logg
       <Card style={{ width: '10rem', border: '0px' }}>
         <Card.Body>
           <Card.Title>${product.price.toFixed(2)}</Card.Title>
-          <Card.Text>
+          
             {loggedIn && (
             <div>
             <Button variant="success" 
@@ -43,7 +43,7 @@ function ProductDetails({ product, handleShowEditModal, handleShowDelModal, logg
               key={`del_${product._id}`}>X</Button>
               </div>)
             }
-          </Card.Text>
+          
         </Card.Body>
       </Card>
       </ListGroup.Item>
