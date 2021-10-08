@@ -45,6 +45,7 @@ router.put('/', async (req, res) => {
                 businessName: req.body.businessName,
                 logo: req.body.logo,
                 businessDescription: req.body.businessDescription,
+                businessURL: req.body.businessURL,
                 address1: req.body.address1,
                 address2: req.body.address2,
                 city: req.body.city,
@@ -68,6 +69,7 @@ router.put('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const business = new Business({
         businessName: req.body.businessName,
+        businessURL: req.body.businessURL,
         address1: req.body.address1,
         address2: req.body.address2,
         city: req.body.city,
