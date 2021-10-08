@@ -8,7 +8,7 @@ import ProductForm from 'components/ProductForm'
 export default function BusinessStore(props) {
   const [error, setError] = useState("")
   const [loggedIn, setLoggedIn] = useState(true)
-  const [businessURL, setBusinessURL] = useState("thebestpub")
+  const [businessURL, setBusinessURL] = useState(props.match.params.businessURL)
   const [businessObj, setBusinessObj] = useState({})
   const [products, setProducts] = useState([])
   const [refreshList, setRefreshList] = useState(false)
