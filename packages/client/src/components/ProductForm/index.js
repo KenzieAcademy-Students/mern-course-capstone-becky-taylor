@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import axios from 'util/axiosConfig.js'
 import './ProductForm.css'
 
-function ProductForm({ product, handleProductChange }) {
+function ProductForm({ product, handleProductChange, business }) {
   const [productId, setProductId] = useState("")
   const [productName, setProductName] = useState("")
   const [productDescription, setProductDescription] = useState("")
@@ -11,7 +11,6 @@ function ProductForm({ product, handleProductChange }) {
   const [productQuantity, setProductQuantity] = useState("")
   const [uploadedFile, setUploadedFile] = useState()
   const [imageURL, setImageURL] = useState("")
-  
   
   const handleImageUpload = (e) => {
     // call the image upload route here
@@ -62,12 +61,16 @@ function ProductForm({ product, handleProductChange }) {
 
     try {
       if(productId){
+        // update base product info
         const updatedProduct = await axios.put(`products/${productId}`,
           { productName: productName, 
             productDescription: productDescription, 
             productPrice: productPrice, 
             productQuantity: productQuantity, 
             productImage: upload_path || imageURL })
+
+        // since the products are tied by reference to the business, no need to update the business data on a product update
+        
       } else {
         const addedProduct = await axios.post('products',
           { productName: productName, 
@@ -76,12 +79,33 @@ function ProductForm({ product, handleProductChange }) {
             productQuantity: productQuantity, 
             productImage: upload_path || imageURL })
 
-          setProductName("")
-          setProductDescription("")
-          setProductPrice("")
-          setProductQuantity("")
-          setImageURL("")
-          setProductId("")
+        // append new product to business products array and update business
+        let productsArray = business.products
+        productsArray.push(addedProduct.data)
+        
+        const updatedBusiness = await axios.put('businesses', 
+          {
+            "businessId": business._id,
+            "products": productsArray,
+            "categories": business.categories,
+            "businessName": business.businessName,
+            "logo": business.logo,
+            "businessDescription": business.businessDescription,
+            "businessURL": business.businessURL,
+            "brandColor": business.brandColor,
+            "address1": business.address1,
+            "address2": business.address2,
+            "city": business.city,
+            "stateZip": business.stateZip,
+            "phone": business.phone })
+
+
+        setProductName("")
+        setProductDescription("")
+        setProductPrice("")
+        setProductQuantity("")
+        setImageURL("")
+        setProductId("")
       }
 
     } catch (err) {
