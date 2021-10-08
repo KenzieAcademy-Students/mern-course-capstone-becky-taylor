@@ -4,7 +4,7 @@ import './BusinessInfo.css'
 import axios from 'util/axiosConfig.js'
 import BusinessEdit from 'components/BusinessEdit'
 
-function BusinessInfo({ }) {
+function BusinessInfo({ businessObj }) {
   const [business, setBusiness] = useState({})
   const [refresh, setRefresh] = useState(false)
 
@@ -13,7 +13,7 @@ function BusinessInfo({ }) {
   }
 
   useEffect(() => {
-    async function getBusinessInfo() {
+    /*async function getBusinessInfo() {
       try {
         const businessInfo = await axios.get('/businesses/6143810dc4773662ace01286')
         setBusiness(businessInfo.data)
@@ -21,7 +21,8 @@ function BusinessInfo({ }) {
         console.error(err.message)
       }
     }
-    getBusinessInfo()
+    getBusinessInfo()*/
+    setBusiness(businessObj)
   }, [refresh])
 
   return (

@@ -3,7 +3,13 @@ const router = express.Router()
 import { Business } from '../models'
 
 router.get('/:businessId', async (req, res) => {
+    const populateQuery = [
+        { path: 'products' },
+        { path: 'categories' }
+      ]
     const business = await Business.findById(req.params.businessId)
+        .populate(populateQuery)
+        .exec()
 
     if (business) {
         res.json(business.toJSON())
@@ -13,8 +19,15 @@ router.get('/:businessId', async (req, res) => {
 })
 
 router.get('/by-name/:businessURL', async (req, res) => {
-    const business = await Business.findOne({businessURL: req.params.businessURL})
 
+    const populateQuery = [
+        { path: 'products' },
+        { path: 'categories' }
+      ]
+    const business = await Business.findOne({businessURL: req.params.businessURL})
+        .populate(populateQuery)
+        .exec()
+    
     if (business) {
         res.json(business.toJSON())
     } else {
@@ -46,7 +59,8 @@ router.put('/', async (req, res) => {
             }
         )
         res.json(updatedBusiness.toJSON())
-    } catch {
+    } catch (error) {
+        console.log(error)
         res.status.apply(404).end()
     }
 })

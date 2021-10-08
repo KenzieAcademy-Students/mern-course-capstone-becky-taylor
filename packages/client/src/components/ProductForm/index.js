@@ -3,15 +3,16 @@ import { Form, Button } from 'react-bootstrap'
 import axios from 'util/axiosConfig.js'
 import './ProductForm.css'
 
-function ProductForm({ product, handleProductChange }) {
+function ProductForm({ product, handleProductChange, business }) {
   const [productId, setProductId] = useState("")
   const [productName, setProductName] = useState("")
   const [productDescription, setProductDescription] = useState("")
   const [productPrice, setProductPrice] = useState("")
   const [productQuantity, setProductQuantity] = useState("")
+  const [productCategory, setProductCategory] = useState("")
   const [uploadedFile, setUploadedFile] = useState()
   const [imageURL, setImageURL] = useState("")
-  
+  const [categoriesArray, setCategoriesArray] = useState([])
   
   const handleImageUpload = (e) => {
     // call the image upload route here
@@ -32,6 +33,9 @@ function ProductForm({ product, handleProductChange }) {
         break;
       case "productQuantity":
         setProductQuantity(e.target.value)
+        break;
+      case "productCategory":
+        setProductCategory(e.target.value)
         break;
       default:
         console.error("Unknown form field: ", e.target.name)
@@ -62,26 +66,53 @@ function ProductForm({ product, handleProductChange }) {
 
     try {
       if(productId){
+        // update base product info
         const updatedProduct = await axios.put(`products/${productId}`,
           { productName: productName, 
             productDescription: productDescription, 
             productPrice: productPrice, 
             productQuantity: productQuantity, 
+            productCategory: productCategory,
             productImage: upload_path || imageURL })
+
+        // since the products are tied by reference to the business, no need to update the business data on a product update
+        
       } else {
         const addedProduct = await axios.post('products',
           { productName: productName, 
             productDescription: productDescription, 
             productPrice: productPrice, 
             productQuantity: productQuantity, 
+            productCategory: productCategory,
             productImage: upload_path || imageURL })
 
-          setProductName("")
-          setProductDescription("")
-          setProductPrice("")
-          setProductQuantity("")
-          setImageURL("")
-          setProductId("")
+        // append new product to business products array and update business
+        let productsArray = business.products
+        productsArray.push(addedProduct.data)
+        
+        const updatedBusiness = await axios.put('businesses', 
+          {
+            "businessId": business._id,
+            "products": productsArray,
+            "categories": business.categories,
+            "businessName": business.businessName,
+            "logo": business.logo,
+            "businessDescription": business.businessDescription,
+            "businessURL": business.businessURL,
+            "brandColor": business.brandColor,
+            "address1": business.address1,
+            "address2": business.address2,
+            "city": business.city,
+            "stateZip": business.stateZip,
+            "phone": business.phone })
+
+
+        setProductName("")
+        setProductDescription("")
+        setProductPrice("")
+        setProductQuantity("")
+        setImageURL("")
+        setProductId("")
       }
 
     } catch (err) {
@@ -91,16 +122,31 @@ function ProductForm({ product, handleProductChange }) {
     handleProductChange()
   }
 
+  const categoryOptions = categoriesArray.map((category) => {
+    return (
+      <option key={category._id} value={category._id}>
+        {category.categoryName}
+      </option>
+    )
+  })
+
   useEffect(() => {
     const loadProduct = async () => {
       try {
         if(product){
+
           setProductName(product.productName)
           setProductDescription(product.description)
           setProductPrice(product.price)
           setProductQuantity(product.quantity)
           setImageURL(product.image)
           setProductId(product._id)
+          setCategoriesArray(business.categories)
+
+        } else {    
+
+          setCategoriesArray(business.categories)
+          
         }
 
       } catch (err) {
@@ -158,13 +204,24 @@ function ProductForm({ product, handleProductChange }) {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="productImage">
-      <Form.Label>Upload a Product Image</Form.Label>
-      <Form.Control 
-        type="file" 
-        name="productImage"
-        accept="file"
-        onChange={handleImageUpload}
-        />
+        <Form.Label>Upload a Product Image</Form.Label>
+        <Form.Control 
+          type="file" 
+          name="productImage"
+          accept="file"
+          onChange={handleImageUpload}
+          />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="productCategory">
+        <Form.Label>Product Category</Form.Label>
+        
+        <Form.Control as="select" name="productCategory" value={productCategory} onChange={handleInputChange}>
+          <option>Select a category</option>
+          {categoryOptions}
+        </Form.Control>
+
+
       </Form.Group>
 
       <Button variant="primary" type="submit">
