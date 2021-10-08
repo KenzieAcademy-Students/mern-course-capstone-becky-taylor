@@ -36,7 +36,7 @@ router.post('/', async (request, response) => {
   /* will need to add
   categories
   */
-  const { productName, productDescription, productPrice, productQuantity, productImage } = request.body
+  const { productName, productDescription, productPrice, productQuantity, productCategory, productImage } = request.body
   
   try {
     const product = new Product({
@@ -45,6 +45,7 @@ router.post('/', async (request, response) => {
       price: productPrice,
       quantity: productQuantity,
       image: productImage,
+      category: productCategory
     })
     
     const savedProduct = await product.save()
@@ -82,7 +83,7 @@ router.put('/:id', async (request, response) => {
   /* will need to add
   categories
   */
-  const { productName, productDescription, productPrice, productQuantity, productImage } = request.body
+  const { productName, productDescription, productPrice, productQuantity, productCategory, productImage } = request.body
   const productId = request.params.id
 
   try {
@@ -95,6 +96,7 @@ router.put('/:id', async (request, response) => {
         description: productDescription,
         price: productPrice,
         quantity: productQuantity,
+        category: productCategory,
         image: productImage
       },
       {
