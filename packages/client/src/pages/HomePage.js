@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import SignUp from '../components/SignUp'
-import SignIn from '../components/SignIn.js'
+import SignIn from '../components/SignIn'
 import { Button } from 'react-bootstrap'
 
 
