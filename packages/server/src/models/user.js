@@ -11,20 +11,20 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    },
+  },
   passwordHash:{
     type: String,
     required: false,
-    },
+  },
   userType:{
       type: String,
-    },
-    business: [
-      {
-        type: ObjectId,
-        ref: 'Business'
-      }
-    ]
+  },
+  business: [
+    {
+      type: ObjectId,
+      ref: 'Business'
+    }
+  ]
 })
 
 const User = mongoose.model('User', userSchema)

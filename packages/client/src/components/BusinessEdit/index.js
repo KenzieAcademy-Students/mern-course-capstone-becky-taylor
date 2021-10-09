@@ -28,23 +28,23 @@ function BusinessEdit({ business, handleBusinessChange }) {
     setFormSubmit(true)
     async function sendNewBusinessInfo() {
       try {
-        const updatedBusiness = await axios.put('businesses',
-          {
-            "businessId": currentBusiness._id,
-            "products": currentBusiness.products,
-            "categories": currentBusiness.categories,
-            "businessName": currentBusiness.businessName,
-            "logo": currentBusiness.logo,
-            "businessDescription": currentBusiness.businessDescription,
-            "businessURL": currentBusiness.businessURL,
-            "brandColor": currentBusiness.brandColor,
-            "address1": currentBusiness.address1,
-            "address2": currentBusiness.address2,
-            "city": currentBusiness.city,
-            "stateZip": currentBusiness.stateZip,
-            "phone": currentBusiness.phone
-          }
-        ) 
+        // const updatedBusiness = await axios.put('businesses',
+        //   {
+        //     "businessId": currentBusiness._id,
+        //     "products": currentBusiness.products,
+        //     "categories": currentBusiness.categories,
+        //     "businessName": currentBusiness.businessName,
+        //     "logo": currentBusiness.logo,
+        //     "businessDescription": currentBusiness.businessDescription,
+        //     "businessURL": currentBusiness.businessURL,
+        //     "brandColor": currentBusiness.brandColor,
+        //     "address1": currentBusiness.address1,
+        //     "address2": currentBusiness.address2,
+        //     "city": currentBusiness.city,
+        //     "stateZip": currentBusiness.stateZip,
+        //     "phone": currentBusiness.phone
+        //   }
+        // ) 
         handleBusinessChange()
         handleClose()
       } catch (err) {

@@ -1,9 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
-import SignUp from "../components/SignUp"
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -28,8 +25,6 @@ function UserProfile() {
 
   return (
     <div>
-  
-     
     </div>
   );
 }
