@@ -5,6 +5,7 @@ import BusinessInfo from 'components/BusinessInfo'
 import Category from 'components/Category'
 import ProductForm from 'components/ProductForm'
 import CategoryForm from 'components/CategoryForm'
+import { useProvideAuth } from 'hooks/useAuth'
 
 export default function BusinessStore(props) {
   const [error, setError] = useState("")
@@ -20,6 +21,9 @@ export default function BusinessStore(props) {
   const [delShowCat, setDelShowCat] = useState(false)
   const [currentCategory, setCurrentCategory] = useState("")
   const [refreshList, setRefreshList] = useState(false)
+  const { state: { business } } = useProvideAuth()
+
+  const auth = useProvideAuth()
 
   const handleShowEditModal = (editProduct) => {
     setCurrentProduct(editProduct)
@@ -143,13 +147,16 @@ export default function BusinessStore(props) {
     
     const getBusiness = async () => {
       try {
-        const businessFound = await axios.get(`businesses/by-name/${businessURL}`)
+        let tempURL = 'business1'
+        const businessFound = await auth.getBusiness(tempURL)
+
+        console.log(business) 
         
-        setBusinessObj(businessFound.data)
-        setProducts([...businessFound.data.products])
+        setBusinessObj(business)
+        setProducts([...business.products])
        
         let categoriesWithProducts = [];
-        businessFound.data.categories.forEach((category) => {
+        business.categories.forEach((category) => {
 
           let categoryObj = {
             categoryName: category.categoryName,
@@ -157,7 +164,7 @@ export default function BusinessStore(props) {
             products: []
           }
 
-          businessFound.data.products.forEach((product) => {
+          business.products.forEach((product) => {
             if(product.category === category._id){
               categoryObj.products.push(product)
             }

@@ -22,6 +22,11 @@ const reducer = (state, action) => {
         isAuthenticated: false,
         user: null,
       }
+    case 'GET_BUSINESS':
+      return {
+        ...state,
+        business: action.payload
+      }
     default:
       return state
   }
@@ -107,6 +112,19 @@ export function useProvideAuth() {
     return JSON.parse(localStorage.getItem('MernAppUser'))
   }
 
+  async function getBusiness(url) {
+    const business = await axios.get(`businesses/by-name/${url}`)
+
+    dispatch({
+      type: 'GET_BUSINESS',
+      payload: business.data
+    })
+  }
+
+  async function updateBusiness() {
+    // Stuff
+  }
+
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem('MernAppUser')) || false
     if (savedUser) {
@@ -121,12 +139,13 @@ export function useProvideAuth() {
     }
   }, [dispatch])
 
-  // Return the user object and auth methods
+  // Return state and auth methods
   return {
     state,
     getCurrentUser,
     signin,
     signup,
     signout,
+    getBusiness
   }
 }
