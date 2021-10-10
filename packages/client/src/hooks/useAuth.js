@@ -56,10 +56,10 @@ export function useProvideAuth() {
   const { state, dispatch } = useAuth()
   const router = useRouter()
 
-  const signin = async (username, password) => {
+  const signin = async (email, password) => {
     try {
       const response = await axios.post(`auth/signin`, {
-        username: username,
+        email: email,
         password: password,
       })
       localStorage.setItem('MernAppUser', JSON.stringify(response.data))
@@ -69,7 +69,7 @@ export function useProvideAuth() {
       })
       return response
     } catch (error) {
-      console.log(error)
+      
       if (error.response) {
         throw new Error(error.response.data.error);
       } else {
@@ -78,16 +78,16 @@ export function useProvideAuth() {
     }
   }
 
-  const signup = async (username, password, emailAddress) => {
+  const signup = async (name, password, email) => {
     try {
       await axios.post(`auth/signup`, {
-        username: username,
+        name: name,
         password: password,
-        emailAddress: emailAddress
+        email: email
       })
-      return await signin(username, password)
+      return await signin(email, password)
     } catch (error) {
-      console.log(error)
+      
       if (error.response) {
         throw new Error(error.response.data.error);
       } else {
@@ -100,7 +100,7 @@ export function useProvideAuth() {
     dispatch({
       type: 'LOGOUT',
     })
-    router.push('/')
+    //router.push('/')
   }
 
   const getCurrentUser = () => {
