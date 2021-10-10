@@ -19,7 +19,7 @@ instance.interceptors.request.use(
   function (config) {
     const token = getUserToken()
     if (token) {
-      config.headers['Authorization'] = 'Bearer ' + token 
+      config.headers['Authorization'] = 'Bearer ' + token
     }
     return config
   },
@@ -27,6 +27,15 @@ instance.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+export const setAuthToken = (token) => {
+  if (token) {
+    //applying token
+    instance.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  } else {
+    //deleting the token from header
+    delete instance.defaults.headers.common['Authorization']
+  }
+}
 
 instance.interceptors.response.use(
   function (response) {

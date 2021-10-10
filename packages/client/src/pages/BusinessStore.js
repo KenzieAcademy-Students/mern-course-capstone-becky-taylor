@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Button, Modal } from 'react-bootstrap'
 import axios from 'util/axiosConfig.js'
+import { useProvideAuth } from 'hooks/useAuth'
 import BusinessInfo from 'components/BusinessInfo'
 import Category from 'components/Category'
 import ProductForm from 'components/ProductForm'
@@ -9,7 +10,8 @@ import { useProvideAuth } from 'hooks/useAuth'
 
 export default function BusinessStore(props) {
   const [error, setError] = useState("")
-  const [loggedIn, setLoggedIn] = useState(true)
+  const { state, getCurrentUser } = useProvideAuth()
+  const [loggedIn, setLoggedIn] = useState(false)
   const [businessURL, setBusinessURL] = useState(props.match.params.businessURL)
   const [businessObj, setBusinessObj] = useState({})
   const [products, setProducts] = useState([])  
@@ -102,7 +104,7 @@ export default function BusinessStore(props) {
   }
 
   const handleDeleteCat = async () => {
-    // have two choices here - either need to figure out delete category, OR need to call it a future enhancement. leaning toward future enhancement.
+    
     try {
 
       // remove deleted category from business categories array and update business
@@ -175,6 +177,7 @@ export default function BusinessStore(props) {
         })
         
         setCategories([...categoriesWithProducts])
+        setLoggedIn(state.isAuthenticated)
         setRefreshList(false)
         
       } catch (err) {
@@ -184,7 +187,7 @@ export default function BusinessStore(props) {
     }
     getBusiness()
     
-  }, [refreshList])
+  }, [state, refreshList])
 
   return (
     <div>
@@ -196,12 +199,14 @@ export default function BusinessStore(props) {
         ))}</div>
       )}
       
+      {loggedIn && (
       <Card style={{ width: '60rem', border: '0px' }}>
         <Card.Body>
           <Button variant="success" onClick={() => handleShowEditModalCat([])} 
-              key={"new_category"}>Add New Category</Button> <Button variant="success" onClick={() => handleShowEditModal([])} key={"new_;product"}>Add New Product</Button>                   
+              key={"new_category"}>Add New Category</Button> <Button variant="success" onClick={() => handleShowEditModal([])} key={"new_product"}>Add New Product</Button>                   
         </Card.Body>
-      </Card>
+      </Card> )
+      }
 
       <Modal size="lg" show={editShow}
         onHide={() => setEditShow(false)}
