@@ -10,7 +10,7 @@ export function useRequireAuth(redirectUrl = '/') {
   // logged in and should redirect.
   useEffect(() => {
     if (auth.state.isAuthenticated === false) {
-      //router.push(redirectUrl)
+      return false
     }
   }, [auth, router, redirectUrl])
 

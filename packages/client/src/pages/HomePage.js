@@ -4,6 +4,7 @@ import { useRequireAuth } from 'hooks/useRequireAuth'
 import { Button, Modal } from 'react-bootstrap'
 import LogInForm from 'components/LogInForm'
 import RegisterForm from 'components/RegisterForm'
+import { Image } from 'react-bootstrap'
 
 
 
@@ -26,6 +27,7 @@ export default function HomePage(props) {
 
   return (
     <main>
+      <Image src='images/bongo_logo.png' />
       <h1>BONGO</h1>
       <h2 className="header"><p>"He can do it. So can you!"</p></h2>
       {!isAuthenticated ? (

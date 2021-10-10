@@ -80,9 +80,7 @@ router.post('/upload-image', async (request, response) => {
 });
 
 router.put('/:id', async (request, response) => {
-  /* will need to add
-  categories
-  */
+  
   const { productName, productDescription, productPrice, productQuantity, productCategory, productImage } = request.body
   const productId = request.params.id
 
