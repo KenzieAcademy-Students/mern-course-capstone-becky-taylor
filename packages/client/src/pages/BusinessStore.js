@@ -153,6 +153,7 @@ export default function BusinessStore(props) {
         setProducts([...businessFound.data.products])
        
         let categoriesWithProducts = [];
+        
         businessFound.data.categories.forEach((category) => {
 
           let categoryObj = {
@@ -170,6 +171,20 @@ export default function BusinessStore(props) {
           categoriesWithProducts.push(categoryObj)
 
         })
+
+        // Finally, add a category for products with no category selected
+        let blankCategoryObj = {
+          categoryName: "Products without a category",
+          _id: "0",
+          products: []
+        }
+        businessFound.data.products.forEach((product) => {
+          
+          if(product["category"] == undefined){
+            blankCategoryObj.products.push(product)
+          }
+        })
+        categoriesWithProducts.push(blankCategoryObj)
         
         setCategories([...categoriesWithProducts])
         setLoggedIn(state.isAuthenticated)
