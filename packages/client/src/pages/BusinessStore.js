@@ -6,7 +6,6 @@ import BusinessInfo from 'components/BusinessInfo'
 import Category from 'components/Category'
 import ProductForm from 'components/ProductForm'
 import CategoryForm from 'components/CategoryForm'
-import { useProvideAuth } from 'hooks/useAuth'
 
 export default function BusinessStore(props) {
   const [error, setError] = useState("")
@@ -23,7 +22,6 @@ export default function BusinessStore(props) {
   const [delShowCat, setDelShowCat] = useState(false)
   const [currentCategory, setCurrentCategory] = useState("")
   const [refreshList, setRefreshList] = useState(false)
-  const { state: { business } } = useProvideAuth()
 
   const auth = useProvideAuth()
 
@@ -149,16 +147,15 @@ export default function BusinessStore(props) {
     
     const getBusiness = async () => {
       try {
-        let tempURL = 'business1'
-        const businessFound = await auth.getBusiness(tempURL)
+        const businessFound = await auth.getBusiness(businessURL)
 
-        console.log(business) 
+        console.log(businessFound)
         
-        setBusinessObj(business)
-        setProducts([...business.products])
+        setBusinessObj(businessFound)
+        setProducts([...state.business.products])
        
         let categoriesWithProducts = [];
-        business.categories.forEach((category) => {
+        state.business.categories.forEach((category) => {
 
           let categoryObj = {
             categoryName: category.categoryName,
@@ -166,7 +163,7 @@ export default function BusinessStore(props) {
             products: []
           }
 
-          business.products.forEach((product) => {
+          state.business.products.forEach((product) => {
             if(product.category === category._id){
               categoryObj.products.push(product)
             }
@@ -185,13 +182,16 @@ export default function BusinessStore(props) {
         setError(err)
       }
     }
-    getBusiness()
+    // Added this to prevent state from updating ten times a second. I assume this will cause problems with refreshing, and will need to be fixed.
+    if (!state.business) {
+      getBusiness()
+    }
     
   }, [state, refreshList])
 
   return (
     <div>
-      <BusinessInfo businessObj={businessObj} handleBusinessChange={handleBusinessChange} />
+      <BusinessInfo businessObj={state.business} handleBusinessChange={handleBusinessChange} />
       
       { categories && (
         <div>{categories.map((category) => (

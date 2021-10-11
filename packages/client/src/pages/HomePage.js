@@ -4,6 +4,7 @@ import { useRequireAuth } from 'hooks/useRequireAuth'
 import { Button, Modal } from 'react-bootstrap'
 import LogInForm from 'components/LogInForm'
 import RegisterForm from 'components/RegisterForm'
+import BusinessEdit from 'components/BusinessEdit'
 
 
 
@@ -14,6 +15,14 @@ export default function HomePage(props) {
   const [showLogInModal, setShowLogInModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showRegisterBusinessModal, setShowRegisterBusinessModal] = useState(false);
+  const [editing, setEditing] = useState(false)
+
+  function handleClose() {
+    setEditing(false)
+  }
+  function handleShow() {
+    setEditing(true)
+  }
 
   const {
     state: { isAuthenticated },
@@ -69,7 +78,12 @@ export default function HomePage(props) {
             Register Your Business
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Add Business Form component here</Modal.Body>
+        <Modal.Body>
+          <Button variant="success" onClick={handleShow}>Edit</Button>
+          <Modal show={editing} onHide={handleClose}>
+            <BusinessEdit business={{}} createOrEdit={true} />
+          </Modal>
+        </Modal.Body>
       </Modal>
       
     </main>
