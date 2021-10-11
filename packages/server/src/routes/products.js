@@ -63,18 +63,23 @@ router.post('/upload-image', async (request, response) => {
       } else {
           
           let productImageUpload = request.files.product_image_upload
+          let businessPath = request.body.business_path
+          let productID = request.body.product_id
+          let timestamp = Date.now()
+
           
-          const uploadPath = path.join(__dirname, '../../../client/') + 'public/images/products/' + productImageUpload.name
+          const uploadPath = path.join(__dirname, '../../../client/') + 'public/images/products/' + businessPath + '/' + productID + '-' + timestamp + '-' + productImageUpload.name
+
+          const uploadedFilePath = `/images/products/${businessPath}/${productID}-${timestamp}-${productImageUpload.name}`
           
           productImageUpload.mv(uploadPath, function(error) {            
             if (error) {
               return response.status(500).json({message: error})
             }
-            response.status(200).json({filePath: `/images/products/${productImageUpload.name}`})
+            response.status(200).json({filePath: uploadedFilePath})
           });          
       }
   } catch (error) {
-      console.dir(error)
       response.status(500).json({message: error})
   }
 });
