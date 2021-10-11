@@ -3,58 +3,142 @@ import { Form, Button, Modal } from 'react-bootstrap'
 import './BusinessEdit.css'
 import axios from 'util/axiosConfig.js'
 
-function BusinessEdit({ }) {
-  const [isNewBusiness, setIsNewBusiness] = useState(false)
-  const [business, setBusiness] = useState({})
-  const [formSubmit, setFormSubmit] = useState(false)
-  const [editing, setEditing] = useState(false)
+function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
+  const [data, setData] = useState({})
 
-  const handleClose = () => setEditing(false);
-  const handleShow = () => setEditing(true);
+  async function handleFormSubmit(e) {
+    e.preventDefault()
+    try {
+      if (createOrEdit) {
+        await axios.post('businesses', {
+          "businessName": data.businessName,
+          "businessURL": data.businessURL,
+          "address1": data.address1,
+          "address2": data.address2,
+          "city": data.city,
+          "stateZip": parseInt(data.stateZip),
+          "phone": parseInt(data.phone)
+        })
+      } else {
+        await axios.put('businesses', {
+          "businessId": data._id,
+          "products": data.products,
+          "categories": data.categories,
+          "businessName": data.businessName,
+          "logo": data.logo,
+          "businessDescription": data.businessDescription,
+          "businessURL": data.businessURL,
+          "brandColor": data.brandColor,
+          "address1": data.address1,
+          "address2": data.address2,
+          "city": data.city,
+          "stateZip": parseInt(data.stateZip),
+          "phone": parseInt(data.phone)
+        })
+        handleBusinessChange()
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function handleInputChange(e) {
+    let updatedBusiness = { ...data }
+    updatedBusiness[e.target.name] = e.target.value
+    setData(updatedBusiness)
+  }
 
   useEffect(() => {
-    async function sendNewBusinessInfo() {
-      try {
-        // axios post/put request depending on isNewBusiness state
-      } catch (err) {
-        console.error(err.message)
-      }
+    if (business) {
+      setData({ ...business })
     }
-    sendNewBusinessInfo()
-  }, [formSubmit])
+  }, [business])
 
   return (
     <>
-      <Button variant="success" onClick={handleShow}>Edit</Button>
-      <Modal show={editing} onHide={handleClose}>
-        <Form id="business-form">
+      { business && ( <>
+        <Form id="business-form" onSubmit={handleFormSubmit}>
             <Form.Group>
                 <Form.Label>Business Name</Form.Label>
-                <Form.Control placeholder="Business Name" value={business.businessName}></Form.Control>
+                <Form.Control 
+                  placeholder="Business Name"
+                  name="businessName"
+                  value={data.businessName}
+                  onChange={handleInputChange}
+                ></Form.Control>
             </Form.Group>
+            {createOrEdit ? (
+              <>
+                <Form.Group>
+                  <Form.Label>Business URL</Form.Label>
+                  <Form.Control
+                    placeholder="Business URL"
+                    name="businessURL"
+                    value={data.businessURL} 
+                    onChange={handleInputChange}
+                  ></Form.Control>
+                </Form.Group>
+              </>
+            ) : (
+              <></>
+            )}
             <Form.Group>
                 <Form.Label>Description</Form.Label>
-                <Form.Control placeholder="Description" value={business.businessDescription}></Form.Control>
+                <Form.Control 
+                  placeholder="Description"
+                  name="businessDescription"
+                  value={data.businessDescription}
+                  onChange={handleInputChange}
+                ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Phone</Form.Label>
+                <Form.Control
+                  placeholder="Phone"
+                  name="phone"
+                  value={data.phone}
+                  onChange={handleInputChange}
+                ></Form.Control>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Address Line 1</Form.Label>
-                <Form.Control placeholder="Address Line 1" value={business.address1}></Form.Control>
+                <Form.Control 
+                  placeholder="Address Line 1" 
+                  name="address1"
+                  value={data.address1}
+                  onChange={handleInputChange}
+                ></Form.Control>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Address Line 2</Form.Label>
-                <Form.Control placeholder="Address Line 2" value={business.address2}></Form.Control>
+                <Form.Control 
+                  placeholder="Address Line 2" 
+                  name="address2"
+                  value={data.address2}
+                  onChange={handleInputChange}
+                ></Form.Control>
             </Form.Group>
             <Form.Group>
                 <Form.Label>City</Form.Label>
-                <Form.Control placeholder="City" value={business.city}></Form.Control>
+                <Form.Control 
+                  placeholder="City" 
+                  name="city"
+                  value={data.city}
+                  onChange={handleInputChange}
+                ></Form.Control>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Zip</Form.Label>
-                <Form.Control placeholder="Zip" value={business.stateZip}></Form.Control>
+                <Form.Control 
+                  placeholder="Zip" 
+                  name="stateZip"
+                  value={data.stateZip}
+                  onChange={handleInputChange}
+                ></Form.Control>
             </Form.Group>
             <Button variant="primary" type="submit">Submit</Button>
         </Form>
-      </Modal>
+      </>)}
     </>
   )
 }

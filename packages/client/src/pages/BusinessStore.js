@@ -29,6 +29,10 @@ export default function BusinessStore(props) {
     setEditShow(true)
   }
 
+  const handleBusinessChange = async () => {
+    setRefreshList(true)
+  }
+
   const handleShowDelModal = (deleteProduct) => {
     setCurrentProduct(deleteProduct)
     setDelShow(true)
@@ -182,7 +186,7 @@ export default function BusinessStore(props) {
 
   return (
     <div>
-      <BusinessInfo businessObj={businessObj} />
+      <BusinessInfo businessObj={businessObj} handleBusinessChange={handleBusinessChange} />
       
       { categories && (
         <div>{categories.map((category) => (

@@ -70,6 +70,7 @@ router.post('/', async (req, res) => {
     const business = new Business({
         businessName: req.body.businessName,
         businessURL: req.body.businessURL,
+        businessDescription: req.body.businessDescription,
         address1: req.body.address1,
         address2: req.body.address2,
         city: req.body.city,
