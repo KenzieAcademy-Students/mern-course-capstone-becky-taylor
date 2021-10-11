@@ -111,6 +111,7 @@ function ProductForm({ product, handleProductChange, business }) {
         setProductDescription("")
         setProductPrice("")
         setProductQuantity("")
+        setProductCategory("")
         setImageURL("")
         setProductId("")
       }
@@ -141,6 +142,7 @@ function ProductForm({ product, handleProductChange, business }) {
           setProductQuantity(product.quantity)
           setImageURL(product.image)
           setProductId(product._id)
+          setProductCategory(product.category)
           setCategoriesArray(business.categories)
 
         } else {    
