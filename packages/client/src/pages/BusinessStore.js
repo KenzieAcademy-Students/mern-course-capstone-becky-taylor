@@ -143,12 +143,12 @@ export default function BusinessStore(props) {
   }
 
   useEffect(() => {
-    
+    console.log("Made it to the store")
     const getBusiness = async () => {
       try {
         
         const businessFound = await axios.get(`businesses/by-name/${businessURL}`)
-        
+        console.log("found business")
         setBusinessObj(businessFound.data)
         setProducts([...businessFound.data.products])
        
