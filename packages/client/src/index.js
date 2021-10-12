@@ -16,8 +16,8 @@ ReactDOM.render(
       <BrowserRouter> 
         <Switch>
           <Route exact path='/' component={HomePage} />
-          <Route exact path='/User/:id' component={UserProfile} />
-          <Route exact path='/store/:businessURL' component={BusinessStore} />
+          <Route path='/User/:id' component={UserProfile} />
+          <Route path='/store/:businessURL' component={BusinessStore} />
         </Switch>
       </BrowserRouter>
       <div>Hello world</div>
