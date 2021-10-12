@@ -7,7 +7,7 @@ import BusinessStore from 'pages/BusinessStore'
 import { ProvideAuth } from 'hooks/useAuth'
 import './index.css'
 
-/** look at snippets useAuth stuff (see snippets index.js) */
+/** useAuth code came from snippets app */
 
 
 ReactDOM.render(
@@ -20,6 +20,7 @@ ReactDOM.render(
           <Route exact path='/store/:businessURL' component={BusinessStore} />
         </Switch>
       </BrowserRouter>
+      <div>Hello world</div>
     </ProvideAuth>
   </React.StrictMode>,
   document.getElementById('root')
