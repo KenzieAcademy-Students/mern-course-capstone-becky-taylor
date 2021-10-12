@@ -1,15 +1,27 @@
-#business-info {
+
+#business-info { 
     padding: 15px;
     border-bottom: 1px solid black;
-    display: flex;
+    background-image: linear-gradient(120deg, yellow, brown);
+    background-size: cover;
+    min-height: 100vh;
 }
 
 #business-text {
     padding-left: 15px;
     display: flex;
     flex-direction: column;
+    font-weight: bold;
+    font-variant: small-caps;
 }
 
 #business-name {
     font-size: x-large;
+    font-weight: bold;
+   font-family: papyrus;
+  
 }
+#imageGlobe {
+    box-shadow: 3px 3px brown, -1em 0 .4em olive;
+}
+
