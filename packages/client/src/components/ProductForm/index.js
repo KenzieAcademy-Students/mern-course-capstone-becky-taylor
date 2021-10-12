@@ -56,6 +56,8 @@ function ProductForm({ product, handleProductChange, business }) {
       let formUploadData = new FormData();
 
       formUploadData.append("product_image_upload", uploadedFile);
+      formUploadData.append("business_path", business._id)
+      formUploadData.append("product_id", productId)
       
       const productImagePath = await axios.post(`products/upload-image`, formUploadData, { headers: {'Content-Type': `multipart/form-data;`,} });
 
@@ -111,12 +113,13 @@ function ProductForm({ product, handleProductChange, business }) {
         setProductDescription("")
         setProductPrice("")
         setProductQuantity("")
+        setProductCategory("")
         setImageURL("")
         setProductId("")
       }
 
     } catch (err) {
-      console.log("there has been an error.")
+      console.error("there has been an error.")
     }    
   
     handleProductChange()
@@ -141,6 +144,7 @@ function ProductForm({ product, handleProductChange, business }) {
           setProductQuantity(product.quantity)
           setImageURL(product.image)
           setProductId(product._id)
+          setProductCategory(product.category)
           setCategoriesArray(business.categories)
 
         } else {    

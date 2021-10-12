@@ -35,7 +35,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(fileUpload())
+app.use(fileUpload({ createParentPath: true }))
+
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(requestLogger)
 
