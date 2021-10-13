@@ -1,6 +1,7 @@
 import { Product } from '../models'
 import express from 'express'
 import path from 'path'
+import { requireAuth } from '../middleware'
 const router = express.Router()
 
 
@@ -32,7 +33,7 @@ router.get('/:id', async (request, response) => {
   }
 })
 
-router.post('/', async (request, response) => {
+router.post('/', requireAuth, async (request, response) => {
   /* will need to add
   categories
   */
@@ -55,7 +56,7 @@ router.post('/', async (request, response) => {
   }
 })
 
-router.post('/upload-image', async (request, response) => {
+router.post('/upload-image', requireAuth, async (request, response) => {
   try {
       
       if(!request.files) {
@@ -84,7 +85,7 @@ router.post('/upload-image', async (request, response) => {
   }
 });
 
-router.put('/:id', async (request, response) => {
+router.put('/:id', requireAuth, async (request, response) => {
   
   const { productName, productDescription, productPrice, productQuantity, productCategory, productImage } = request.body
   const productId = request.params.id
@@ -116,7 +117,7 @@ router.put('/:id', async (request, response) => {
 delete with authorization - kept this here for future reference once we get auth set up
 router.delete('/:id', requireAuth, async (request, response) => {
 */
-router.delete('/:id', async (request, response) => {
+router.delete('/:id', requireAuth, async (request, response) => {
   
   const productId = request.params.id
   const product = await Product.findById(productId)
