@@ -3,11 +3,6 @@ import { Card, Button } from 'react-bootstrap'
 import './Category.css'
 import ProductsList from 'components/ProductsList'
 
-/*
- Need to build out the Category component to:
-  -take in a category and it's corresponding list of products 
- */
-
 function Category({ category, products, loggedIn, handleShowEditModalCat, handleShowDelModalCat, handleShowEditModal, handleShowDelModal }) {
 
   const handleEditClick = (editCategory) => {
