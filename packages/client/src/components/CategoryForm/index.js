@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, InputGroup } from "react-bootstrap";
 import axios from "util/axiosConfig.js";
 import "./CategoryForm.css";
 
 function CategoryForm({ category, handleCategoryChange, business }) {
   const [categoryId, setCategoryId] = useState("");
   const [categoryName, setCategoryName] = useState("");
+  const [validated, setValidated] = useState(false);
 
   const handleInputChange = (e) => {
     setCategoryName(e.target.value);
@@ -14,6 +15,11 @@ function CategoryForm({ category, handleCategoryChange, business }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (e.currentTarget.checkValidity() === false) {
+      //if form is invalid, return false?
+      return false
+    }
+    setValidated(true);
 
     try {
       if (categoryId) {
@@ -73,20 +79,23 @@ function CategoryForm({ category, handleCategoryChange, business }) {
 
   return (
     <div>
-      <Form onSubmit={handleFormSubmit}>
+      <Form validated={validated} onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="categoryId">
           <Form.Control type="hidden" value={categoryId} />
         </Form.Group>
+        <InputGroup>
         <Form.Group className="mb-3" controlId="categoryName">
           <Form.Label>Category Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter category name"
+            required 
             name="categoryName"
             value={categoryName}
             onChange={handleInputChange}
           />
-        </Form.Group>
+        </Form.Group>        
+        </InputGroup>
 
         <Button variant="primary" type="submit">
           Submit
