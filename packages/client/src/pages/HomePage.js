@@ -14,14 +14,12 @@ import { Image } from 'react-bootstrap'
 
 export default function HomePage(props) {
   const { state, signout } = useProvideAuth()
-  const [showLogInModal, setShowLogInModal] = useState(false)
-  const [showRegisterModal, setShowRegisterModal] = useState(false)
-  const [showRegisterBusinessModal, setShowRegisterBusinessModal] = useState(false)
+  const [showLogInModal, setShowLogInModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showRegisterBusinessModal, setShowRegisterBusinessModal] = useState(false);
   const [businessRegistered, setBusinessRegistered] = useState(false)
-  const [editing, setEditing] = useState(false)
 
-  const handleClose = () => setEditing(false)
-  const handleShow = () => setEditing(true)
+  const hideRegisterBusinessModal = () => setShowRegisterBusinessModal(false)
 
   const router = useRouter()
 
@@ -105,10 +103,7 @@ export default function HomePage(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Button variant="success" onClick={handleShow}>Edit</Button>
-          <Modal show={editing} onHide={handleClose}>
-            <BusinessEdit business={{}} createOrEdit={true} setBusinessRegistered={setBusinessRegistered} />
-          </Modal>
+          <BusinessEdit business={{}} createOrEdit={true} handleClose={hideRegisterBusinessModal} setBusinessRegistered={setBusinessRegistered} />
         </Modal.Body>
       </Modal>
       
