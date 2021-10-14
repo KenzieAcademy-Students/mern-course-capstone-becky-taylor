@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useProvideAuth } from 'hooks/useAuth'
 import { useRequireAuth } from 'hooks/useRequireAuth'
 import useRouter from 'hooks/useRouter'
@@ -17,6 +17,7 @@ export default function HomePage(props) {
   const [showLogInModal, setShowLogInModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showRegisterBusinessModal, setShowRegisterBusinessModal] = useState(false);
+  const [businessRegistered, setBusinessRegistered] = useState(false)
 
   const hideRegisterBusinessModal = () => setShowRegisterBusinessModal(false)
 
@@ -33,6 +34,24 @@ export default function HomePage(props) {
     router.push(`/store/${business.data.businessURL}`)
   }
 
+  useEffect(() => {
+    if(state.isAuthenticated){
+      const checkForBusiness = async () => {
+        try {
+          
+            const loggedInUser = await axios.get(`users/${state.user.uid}`)
+            if(loggedInUser.data.business.length > 0){
+              setBusinessRegistered(true)
+            }
+          
+        } catch (err) {
+          console.error(err.message)        
+        }
+      }
+      checkForBusiness()
+    }
+  }, [])
+
   return (
     <main>
       <Image src='images/bongo_logo.png' />
@@ -45,7 +64,11 @@ export default function HomePage(props) {
         </>
       ) : (
         <>
+          {!businessRegistered && (
+          <>
           <Button onClick={() => setShowRegisterBusinessModal(true)} >Register Your Business</Button> &nbsp;
+          </>
+          )}
           <Button onClick={() => sendToBusiness()} >Edit Your Business</Button> &nbsp;
           <Button onClick={() => signout()} >Log Out</Button> &nbsp;
         </>
@@ -80,7 +103,7 @@ export default function HomePage(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <BusinessEdit business={{}} createOrEdit={true} handleClose={hideRegisterBusinessModal} />
+          <BusinessEdit business={{}} createOrEdit={true} handleClose={hideRegisterBusinessModal} setBusinessRegistered={setBusinessRegistered} />
         </Modal.Body>
       </Modal>
       

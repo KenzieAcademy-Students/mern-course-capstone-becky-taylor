@@ -4,7 +4,7 @@ import './BusinessEdit.css'
 import axios from 'util/axiosConfig.js'
 import { useProvideAuth } from 'hooks/useAuth'
 
-function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClose }) {
+function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClose, setBusinessRegistered }) {
   const [data, setData] = useState({})
   const { state } = useProvideAuth()
 
@@ -25,6 +25,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClos
           "userId": state.user.uid,
           "business": [ newBusiness.data ]
         })
+        setBusinessRegistered(true)
         handleClose()
       } else {
         await axios.put('businesses', {
