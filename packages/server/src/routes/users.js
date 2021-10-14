@@ -1,7 +1,7 @@
 import express from 'express'
 
 const router = express.Router()
-import { User } from '../models'
+import { User, Business } from '../models'
 
 
 
@@ -34,20 +34,25 @@ router.post('/', async (req, res)=>{
   }
 })
 
-// Updating User
-router.put('/:id', getUser, async (req, res) => {
- if (req.body.name !== null) {
-   res.id.name = req.body.name
- }
- if (req.body.email !== null) {
-  res.id.email = req.body.email
- }
- try {
-   const updatedUser = await res.id.save()
-   res.json(updatedUser)
- } catch (err) {
-   res.status(400).json({ message: err.message })
- }
+// Add a business to the user's business array
+router.put('/', async (req, res) => {
+  const newBusiness = await Business.findById(req.body.business[0]._id)
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      {
+        _id: req.body.userId
+      },
+      {
+        $push: { business: newBusiness }
+      },
+      {
+        new: true
+      }
+    )
+    res.json(updatedUser.toJSON())
+  } catch (err) {
+    res.status.apply(404).end()
+  }
 })
 
 // Deleting User

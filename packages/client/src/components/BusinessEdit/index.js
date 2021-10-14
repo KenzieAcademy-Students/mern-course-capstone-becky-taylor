@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Form, Button, Modal } from 'react-bootstrap'
 import './BusinessEdit.css'
 import axios from 'util/axiosConfig.js'
+import { useProvideAuth } from 'hooks/useAuth'
 
 function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClose }) {
   const [data, setData] = useState({})
+  const { state } = useProvideAuth()
 
   async function handleFormSubmit(e) {
     e.preventDefault()
     try {
       if (createOrEdit) {
-        await axios.post('businesses', {
+        const newBusiness = await axios.post('businesses', {
           "businessName": data.businessName,
           "businessURL": data.businessURL,
           "address1": data.address1,
@@ -18,6 +20,10 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClos
           "city": data.city,
           "stateZip": parseInt(data.stateZip),
           "phone": parseInt(data.phone)
+        })
+        await axios.put('users', {
+          "userId": state.user.uid,
+          "business": [ newBusiness.data ]
         })
         handleClose()
       } else {
