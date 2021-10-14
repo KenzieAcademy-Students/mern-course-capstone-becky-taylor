@@ -13,7 +13,7 @@ import { Image } from 'react-bootstrap'
 
 
 export default function HomePage(props) {
-  const { state, signout } = useProvideAuth()
+  const { state, getCurrentUser, signout } = useProvideAuth()
   const [showLogInModal, setShowLogInModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showRegisterBusinessModal, setShowRegisterBusinessModal] = useState(false);
@@ -35,22 +35,25 @@ export default function HomePage(props) {
   }
 
   useEffect(() => {
-    if(state.isAuthenticated){
+    
       const checkForBusiness = async () => {
         try {
-          
-            const loggedInUser = await axios.get(`users/${state.user.uid}`)
+          const localUser = getCurrentUser()          
+          if(localUser){
+            const loggedInUser = await axios.get(`users/${localUser.uid}`)
             if(loggedInUser.data.business.length > 0){
               setBusinessRegistered(true)
+            } else {
+              setBusinessRegistered(false)
             }
-          
+          }
         } catch (err) {
           console.error(err.message)        
         }
       }
       checkForBusiness()
-    }
-  }, [])
+    
+  }, [state])
 
   return (
     <main>
