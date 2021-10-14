@@ -64,7 +64,7 @@ export default function HomePage(props) {
         </>
       ) : (
         <>
-          {businessRegistered && (
+          {!businessRegistered && (
           <>
           <Button onClick={() => setShowRegisterBusinessModal(true)} >Register Your Business</Button> &nbsp;
           </>
