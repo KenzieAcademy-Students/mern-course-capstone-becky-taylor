@@ -5,20 +5,23 @@ import HomePage from './pages/HomePage'
 import UserProfile from './pages/UserProfile'
 import BusinessStore from 'pages/BusinessStore'
 import { ProvideAuth } from 'hooks/useAuth'
+import { AppRouter } from 'AppRouter'
 import './index.css'
 
-/** look at snippets useAuth stuff (see snippets index.js) */
+/** useAuth code came from snippets app */
 
 
 ReactDOM.render(
   <React.StrictMode>
     <ProvideAuth>
       <BrowserRouter> 
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route exact path='/User/:id' component={UserProfile} />
-          <Route exact path='/store/:businessURL' component={BusinessStore} />
-        </Switch>
+        <AppRouter>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/User/:id' component={UserProfile} />
+            <Route path='/store/:businessURL' component={BusinessStore} />
+          </Switch>
+        </AppRouter>
       </BrowserRouter>
     </ProvideAuth>
   </React.StrictMode>,

@@ -1,4 +1,5 @@
 import express from 'express'
+import { requireAuth } from '../middleware'
 const router = express.Router()
 import { Category } from '../models'
 
@@ -27,7 +28,7 @@ router.get('/:id', async (request, response) => {
 
 }) 
 
-router.post('/', async (request, response) => {
+router.post('/', requireAuth, async (request, response) => {
 
   const { name} = request.body
   
@@ -44,7 +45,7 @@ router.post('/', async (request, response) => {
   }
 })
 
-router.put('/:id', async (request, response) => {
+router.put('/:id', requireAuth, async (request, response) => {
   
   const { name } = request.body
   const categoryId = request.params.id
@@ -67,7 +68,7 @@ router.put('/:id', async (request, response) => {
   }
 })
 
-router.delete('/:id', async (request, response) => {
+router.delete('/:id', requireAuth, async (request, response) => {
   
   const categoryId = request.params.id
   const category = await Category.findById(categoryId)

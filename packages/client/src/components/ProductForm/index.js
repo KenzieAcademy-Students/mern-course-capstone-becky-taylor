@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, InputGroup } from 'react-bootstrap'
 import axios from 'util/axiosConfig.js'
 import './ProductForm.css'
 
 function ProductForm({ product, handleProductChange, business }) {
+  const [validated, setValidated] = useState(false);
   const [productId, setProductId] = useState("")
   const [productName, setProductName] = useState("")
   const [productDescription, setProductDescription] = useState("")
@@ -47,6 +48,11 @@ function ProductForm({ product, handleProductChange, business }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (e.currentTarget.checkValidity() === false) {
+      //if form is invalid, return false?
+      return false
+    }
+    setValidated(true);
 
     let upload_path=''
 
@@ -163,49 +169,56 @@ function ProductForm({ product, handleProductChange, business }) {
 
   return (
     <div>
-     <Form encType="multipart/form-data" onSubmit={handleFormSubmit}>
+     <Form validated={validated} encType="multipart/form-data" onSubmit={handleFormSubmit}>
       <Form.Group className="mb-3" controlId="productId">
         <Form.Control type="hidden" value={product._id} />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="productName">
-        <Form.Label>Product Name</Form.Label>
-        <Form.Control 
-          type="text" 
-          placeholder="Enter product name" 
-          name="productName"
-          value={productName} 
-          onChange={handleInputChange} />
-      </Form.Group>
-
+      <InputGroup>
+        <Form.Group className="mb-3" controlId="productName">
+          <Form.Label>Product Name</Form.Label>
+          <Form.Control 
+            type="text" 
+            placeholder="Enter product name" 
+            required
+            name="productName"
+            value={productName} 
+            onChange={handleInputChange} />
+        </Form.Group>
+      </InputGroup>
+      
       <Form.Group className="mb-3" controlId="productDescription">
         <Form.Label>Product Description</Form.Label>
         <Form.Control 
-          type="text" 
+          type="text"
           placeholder="Enter product description" 
           name="productDescription" 
           value={productDescription} 
           onChange={handleInputChange} />
       </Form.Group>
-
-      <Form.Group className="mb-3" controlId="productPrice">
-        <Form.Label>Product Price</Form.Label>
-        <Form.Control 
-          type="number" 
-          placeholder="Enter product price"
-          name="productPrice" 
-          value={productPrice} 
-          onChange={handleInputChange} />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="productQuantity">
-        <Form.Label>Product Quantity</Form.Label>
-        <Form.Control 
-          type="number"
-          placeholder="Enter quantity" 
-          name="productQuantity" 
-          value={productQuantity} 
-          onChange={handleInputChange} />
-      </Form.Group>
+      
+      <InputGroup>
+        <Form.Group className="mb-3" controlId="productPrice">
+          <Form.Label>Product Price</Form.Label>
+          <Form.Control 
+            type="number" 
+            placeholder="Enter product price"
+            required
+            name="productPrice" 
+            value={productPrice} 
+            onChange={handleInputChange} />
+        </Form.Group>
+        &nbsp;
+        <Form.Group className="mb-3" controlId="productQuantity">
+          <Form.Label>Product Quantity</Form.Label>
+          <Form.Control 
+            type="number"
+            placeholder="Enter quantity" 
+            required
+            name="productQuantity" 
+            value={productQuantity} 
+            onChange={handleInputChange} />
+        </Form.Group>
+      </InputGroup>
 
       <Form.Group className="mb-3" controlId="productImage">
         <Form.Label>Upload a Product Image</Form.Label>
@@ -216,17 +229,15 @@ function ProductForm({ product, handleProductChange, business }) {
           onChange={handleImageUpload}
           />
       </Form.Group>
-
+      <InputGroup>
       <Form.Group className="mb-3" controlId="productCategory">
-        <Form.Label>Product Category</Form.Label>
-        
+        <Form.Label>Product Category</Form.Label>        
         <Form.Control as="select" name="productCategory" value={productCategory} onChange={handleInputChange}>
           <option>Select a category</option>
           {categoryOptions}
         </Form.Control>
-
-
       </Form.Group>
+      </InputGroup>
 
       <Button variant="primary" type="submit">
         Submit

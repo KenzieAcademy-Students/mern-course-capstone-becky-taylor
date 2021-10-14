@@ -143,12 +143,10 @@ export default function BusinessStore(props) {
   }
 
   useEffect(() => {
-    
     const getBusiness = async () => {
       try {
         
         const businessFound = await axios.get(`businesses/by-name/${businessURL}`)
-        
         setBusinessObj(businessFound.data)
         setProducts([...businessFound.data.products])
        
@@ -184,10 +182,26 @@ export default function BusinessStore(props) {
             blankCategoryObj.products.push(product)
           }
         })
-        categoriesWithProducts.push(blankCategoryObj)
-        
+
+        // only push this category into the list if it has products 
+        if(blankCategoryObj.products.length > 0){
+          categoriesWithProducts.push(blankCategoryObj)
+        } 
         setCategories([...categoriesWithProducts])
-        setLoggedIn(state.isAuthenticated)
+
+        //if the user is logged in, need to determine if they can edit the business
+        if(state.isAuthenticated){
+          //get user by id
+          const loggedInUser = await axios.get(`users/${state.user.uid}`)
+         
+          // if business associated with the user matches the business that we're viewing, then set logged in to true
+          loggedInUser.data.business.forEach((business) => {
+            if(business === businessFound.data._id){
+              setLoggedIn(true)
+            }
+          })
+        }
+        
         setRefreshList(false)
         
       } catch (err) {

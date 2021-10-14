@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Modal } from 'react-bootstrap'
+import { Container, Image, Row, Col, Button, Modal } from 'react-bootstrap'
 import './BusinessInfo.css'
 import axios from 'util/axiosConfig.js'
 import BusinessEdit from 'components/BusinessEdit'

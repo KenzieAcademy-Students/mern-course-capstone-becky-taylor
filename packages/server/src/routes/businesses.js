@@ -1,4 +1,5 @@
 import express from 'express'
+import { requireAuth } from '../middleware'
 const router = express.Router()
 import { Business } from '../models'
 
@@ -38,7 +39,7 @@ router.get('/by-name/:businessURL', async (req, res) => {
 })
 
 // Edit a business.
-router.put('/', async (req, res) => {
+router.put('/', requireAuth, async (req, res) => {
     try {
         const updatedBusiness = await Business.findByIdAndUpdate(
             {
@@ -70,7 +71,7 @@ router.put('/', async (req, res) => {
 })
 
 // Create a new business.
-router.post('/', async (req, res) => {
+router.post('/', requireAuth, async (req, res) => {
     const business = new Business({
         businessName: req.body.businessName,
         businessURL: req.body.businessURL,
