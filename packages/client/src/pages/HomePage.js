@@ -16,6 +16,8 @@ export default function HomePage(props) {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showRegisterBusinessModal, setShowRegisterBusinessModal] = useState(false);
 
+  const hideRegisterBusinessModal = () => setShowRegisterBusinessModal(false)
+
   const {
     state: { isAuthenticated },
   } = useRequireAuth()
@@ -72,7 +74,7 @@ export default function HomePage(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <BusinessEdit business={{}} createOrEdit={true} />
+          <BusinessEdit business={{}} createOrEdit={true} handleClose={hideRegisterBusinessModal} />
         </Modal.Body>
       </Modal>
       
