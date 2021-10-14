@@ -15,10 +15,6 @@ export default function HomePage(props) {
   const [showLogInModal, setShowLogInModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showRegisterBusinessModal, setShowRegisterBusinessModal] = useState(false);
-  const [editing, setEditing] = useState(false)
-
-  const handleClose = () => setEditing(false)
-  const handleShow = () => setEditing(true)
 
   const {
     state: { isAuthenticated },
@@ -76,10 +72,7 @@ export default function HomePage(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Button variant="success" onClick={handleShow}>Edit</Button>
-          <Modal show={editing} onHide={handleClose}>
-            <BusinessEdit business={{}} createOrEdit={true} />
-          </Modal>
+          <BusinessEdit business={{}} createOrEdit={true} />
         </Modal.Body>
       </Modal>
       

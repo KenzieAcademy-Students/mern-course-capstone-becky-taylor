@@ -3,6 +3,7 @@ import { requireAuth } from '../middleware'
 const router = express.Router()
 import { Business } from '../models'
 
+// Get a business via ID, if available.
 router.get('/:businessId', async (req, res) => {
     const populateQuery = [
         { path: 'products' },
@@ -19,6 +20,7 @@ router.get('/:businessId', async (req, res) => {
     }
 })
 
+// Get a business by its URL (which will generally be similar to its name, but this will likely need to be streamlined for production).
 router.get('/by-name/:businessURL', async (req, res) => {
 
     const populateQuery = [
@@ -36,6 +38,7 @@ router.get('/by-name/:businessURL', async (req, res) => {
     }
 })
 
+// Edit a business.
 router.put('/', requireAuth, async (req, res) => {
     try {
         const updatedBusiness = await Business.findByIdAndUpdate(
@@ -67,6 +70,7 @@ router.put('/', requireAuth, async (req, res) => {
     }
 })
 
+// Create a new business.
 router.post('/', requireAuth, async (req, res) => {
     const business = new Business({
         businessName: req.body.businessName,
