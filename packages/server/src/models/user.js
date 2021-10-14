@@ -3,28 +3,28 @@ const { ObjectId } = mongoose.Schema.Types
 
 
 const userSchema = new mongoose.Schema({
-  name:{
+  name: {
     type: String,
     required: true,
   },
-  email:{ 
+  email: { 
     type: String,
     unique: true,
     required: true,
-    },
-  passwordHash:{
+  },
+  passwordHash: {
     type: String,
     required: false,
-    },
-  userType:{
-      type: String,
-    },
-    business: [
-      {
-        type: ObjectId,
-        ref: 'Business'
-      }
-    ]
+  },
+  userType: {
+    type: String,
+  },
+  business: [
+    {
+      type: ObjectId,
+      ref: 'Business'
+    }
+  ]
 })
 
 const User = mongoose.model('User', userSchema)
