@@ -4,7 +4,7 @@ import './BusinessInfo.css'
 import axios from 'util/axiosConfig.js'
 import BusinessEdit from 'components/BusinessEdit'
 
-function BusinessInfo({ businessObj, handleBusinessChange }) {
+function BusinessInfo({ businessObj, handleBusinessChange, loggedIn }) {
   const [editing, setEditing] = useState(false)
 
   const handleClose = () => setEditing(false)
@@ -19,7 +19,11 @@ function BusinessInfo({ businessObj, handleBusinessChange }) {
             <div id="business-desc">{businessObj.businessDescription}</div>
           </div>
           <div>
-          <Button variant="success" onClick={handleShow}>Edit</Button>
+
+          { loggedIn && 
+            <Button variant="success" onClick={handleShow}>Edit</Button>
+          }
+
           <Modal show={editing} onHide={handleClose}>
             <BusinessEdit business={businessObj} handleBusinessChange={handleBusinessChange} createOrEdit={false} />
           </Modal>

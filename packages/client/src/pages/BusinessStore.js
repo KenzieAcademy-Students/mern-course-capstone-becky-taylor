@@ -201,7 +201,7 @@ export default function BusinessStore(props) {
 
   return (
     <div>
-      <BusinessInfo businessObj={businessObj} handleBusinessChange={handleBusinessChange} />
+      <BusinessInfo businessObj={businessObj} handleBusinessChange={handleBusinessChange} loggedIn={loggedIn} />
       
       { categories && (
         <div>{categories.map((category) => (
