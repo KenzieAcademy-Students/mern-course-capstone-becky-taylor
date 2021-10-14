@@ -25,7 +25,7 @@ function BusinessInfo({ businessObj, handleBusinessChange, loggedIn }) {
           }
 
           <Modal show={editing} onHide={handleClose}>
-            <BusinessEdit business={businessObj} handleBusinessChange={handleBusinessChange} createOrEdit={false} />
+            <BusinessEdit business={businessObj} handleBusinessChange={handleBusinessChange} createOrEdit={false} handleClose={handleClose} />
           </Modal>
           </div>
       </div>

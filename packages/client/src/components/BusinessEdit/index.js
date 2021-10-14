@@ -3,7 +3,7 @@ import { Form, Button, Modal } from 'react-bootstrap'
 import './BusinessEdit.css'
 import axios from 'util/axiosConfig.js'
 
-function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
+function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClose }) {
   const [data, setData] = useState({})
 
   async function handleFormSubmit(e) {
@@ -19,6 +19,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
           "stateZip": parseInt(data.stateZip),
           "phone": parseInt(data.phone)
         })
+        handleClose()
       } else {
         await axios.put('businesses', {
           "businessId": data._id,
@@ -36,6 +37,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
           "phone": parseInt(data.phone)
         })
         handleBusinessChange()
+        handleClose()
       }
     } catch (err) {
       console.log(err)
