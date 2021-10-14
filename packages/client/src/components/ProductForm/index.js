@@ -11,15 +11,9 @@ function ProductForm({ product, handleProductChange, business }) {
   const [productPrice, setProductPrice] = useState("")
   const [productQuantity, setProductQuantity] = useState("")
   const [productCategory, setProductCategory] = useState("")
-  const [uploadedFile, setUploadedFile] = useState()
-  const [imageURL, setImageURL] = useState("")
+  const [productImage, setProductImage] = useState("")
   const [categoriesArray, setCategoriesArray] = useState([])
   
-  const handleImageUpload = (e) => {
-    // call the image upload route here
-    setUploadedFile(e.target.files[0])
-  }
-
   const handleInputChange = (e) => {
     
     switch(e.target.name) {
@@ -34,6 +28,9 @@ function ProductForm({ product, handleProductChange, business }) {
         break;
       case "productQuantity":
         setProductQuantity(e.target.value)
+        break;
+      case "productImage":
+        setProductImage(e.target.value)
         break;
       case "productCategory":
         setProductCategory(e.target.value)
@@ -54,24 +51,6 @@ function ProductForm({ product, handleProductChange, business }) {
     }
     setValidated(true);
 
-    let upload_path=''
-
-    if(uploadedFile){
-      // create FormData object, append the file to the FormData object, call the upload endpoint to upload the file and return the path
-      
-      let formUploadData = new FormData();
-
-      formUploadData.append("product_image_upload", uploadedFile);
-      formUploadData.append("business_path", business._id)
-      formUploadData.append("product_id", productId)
-      
-      const productImagePath = await axios.post(`products/upload-image`, formUploadData, { headers: {'Content-Type': `multipart/form-data;`,} });
-
-      upload_path = productImagePath.data.filePath
-      setImageURL(upload_path)
-      
-    }
-
     try {
       if(productId){
         // update base product info
@@ -81,7 +60,7 @@ function ProductForm({ product, handleProductChange, business }) {
             productPrice: productPrice, 
             productQuantity: productQuantity, 
             productCategory: productCategory,
-            productImage: upload_path || imageURL })
+            productImage: productImage })
 
         // since the products are tied by reference to the business, no need to update the business data on a product update
         
@@ -92,7 +71,7 @@ function ProductForm({ product, handleProductChange, business }) {
             productPrice: productPrice, 
             productQuantity: productQuantity, 
             productCategory: productCategory,
-            productImage: upload_path || imageURL })
+            productImage: productImage })
 
         // append new product to business products array and update business
         let productsArray = business.products
@@ -120,7 +99,7 @@ function ProductForm({ product, handleProductChange, business }) {
         setProductPrice("")
         setProductQuantity("")
         setProductCategory("")
-        setImageURL("")
+        setProductImage("")
         setProductId("")
       }
 
@@ -148,7 +127,7 @@ function ProductForm({ product, handleProductChange, business }) {
           setProductDescription(product.description)
           setProductPrice(product.price)
           setProductQuantity(product.quantity)
-          setImageURL(product.image)
+          setProductImage(product.image)
           setProductId(product._id)
           setProductCategory(product.category)
           setCategoriesArray(business.categories)
@@ -221,14 +200,15 @@ function ProductForm({ product, handleProductChange, business }) {
       </InputGroup>
 
       <Form.Group className="mb-3" controlId="productImage">
-        <Form.Label>Upload a Product Image</Form.Label>
+        <Form.Label>Product Image</Form.Label>
         <Form.Control 
-          type="file" 
-          name="productImage"
-          accept="file"
-          onChange={handleImageUpload}
-          />
+          type="text"
+          placeholder="Enter product image url" 
+          name="productImage" 
+          value={productImage} 
+          onChange={handleInputChange} />
       </Form.Group>
+
       <InputGroup>
       <Form.Group className="mb-3" controlId="productCategory">
         <Form.Label>Product Category</Form.Label>        
