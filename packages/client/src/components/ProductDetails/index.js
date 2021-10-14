@@ -16,7 +16,7 @@ function ProductDetails({ product, handleShowEditModal, handleShowDelModal, logg
     <div>
      <ListGroup horizontal>
       { product.image && 
-      <ListGroup.Item><Image src={product.image} /></ListGroup.Item>
+      <ListGroup.Item><Image src={product.image} style={{width: '150px'}} /></ListGroup.Item>
       }
       <ListGroup.Item>
       <Card style={{ width: '40rem', border: '0px' }}>
