@@ -76,10 +76,7 @@ export default function HomePage(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Button variant="success" onClick={handleShow}>Edit</Button>
-          <Modal show={editing} onHide={handleClose}>
-            <BusinessEdit business={{}} createOrEdit={true} />
-          </Modal>
+          <BusinessEdit business={{}} createOrEdit={true} />
         </Modal.Body>
       </Modal>
       
