@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useProvideAuth } from 'hooks/useAuth'
 import { useRequireAuth } from 'hooks/useRequireAuth'
+import useRouter from 'hooks/useRouter'
+import axios from 'util/axiosConfig.js'
 import { Button, Modal } from 'react-bootstrap'
 import LogInForm from 'components/LogInForm'
 import RegisterForm from 'components/RegisterForm'
@@ -18,13 +20,17 @@ export default function HomePage(props) {
 
   const hideRegisterBusinessModal = () => setShowRegisterBusinessModal(false)
 
+  const router = useRouter()
+
   const {
     state: { isAuthenticated },
   } = useRequireAuth()
 
-  const sendToBusiness = () => {
-    console.dir(state)
+  const sendToBusiness = async () => {
+    const loggedInUser = await axios.get(`users/${state.user.uid}`)
+    const business = await axios.get(`businesses/${loggedInUser.data.business[0]}`)
     // this will get the businessurl value and redirect to the business page
+    router.push(`/store/${business.data.businessURL}`)
   }
 
   return (
