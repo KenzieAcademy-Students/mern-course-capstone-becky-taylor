@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Form, Button, Modal } from 'react-bootstrap'
+import { Form, Button, Modal, Container } from 'react-bootstrap'
 import './BusinessEdit.css'
 import axios from 'util/axiosConfig.js'
 
@@ -100,7 +100,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
                   onChange={handleInputChange}
                 ></Form.Control>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="formGroup">
                 <Form.Label>Address Line 1</Form.Label>
                 <Form.Control 
                   placeholder="Address Line 1" 
@@ -109,7 +109,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
                   onChange={handleInputChange}
                 ></Form.Control>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="formGroup">
                 <Form.Label>Address Line 2</Form.Label>
                 <Form.Control 
                   placeholder="Address Line 2" 
@@ -118,7 +118,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
                   onChange={handleInputChange}
                 ></Form.Control>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="formGroup">
                 <Form.Label>City</Form.Label>
                 <Form.Control 
                   placeholder="City" 
@@ -127,7 +127,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
                   onChange={handleInputChange}
                 ></Form.Control>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="formGroup">
                 <Form.Label>Zip</Form.Label>
                 <Form.Control 
                   placeholder="Zip" 
@@ -136,7 +136,10 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit }) {
                   onChange={handleInputChange}
                 ></Form.Control>
             </Form.Group>
-            <Button variant="primary" type="submit">Submit</Button>
+           
+            <Button variant="primary" type="submit" id="sbMt-Btn">Submit</Button>
+          
+
         </Form>
       </>)}
     </>
