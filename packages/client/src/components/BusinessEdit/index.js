@@ -91,6 +91,15 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClos
               <></>
             )}
             <Form.Group>
+                <Form.Label>Logo (Please provide a URL)</Form.Label>
+                <Form.Control
+                  placeholder="Logo"
+                  name="logo"
+                  value={data.logo}
+                  onChange={handleInputChange}
+                ></Form.Control>
+            </Form.Group>
+            <Form.Group>
                 <Form.Label>Description</Form.Label>
                 <Form.Control 
                   placeholder="Description"
