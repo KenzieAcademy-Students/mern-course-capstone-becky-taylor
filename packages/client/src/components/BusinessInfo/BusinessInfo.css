@@ -1,14 +1,17 @@
 
 #business-info { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 15px;
     border-bottom: 1px solid black;
     background-image: linear-gradient(120deg, yellow, brown);
     background-size: cover;
-    min-height: 100vh;
 }
 
 #business-text {
     padding-left: 15px;
+    flex-grow: 2;
     display: flex;
     flex-direction: column;
     font-weight: bold;

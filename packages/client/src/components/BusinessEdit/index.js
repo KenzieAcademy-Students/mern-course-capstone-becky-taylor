@@ -67,7 +67,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClos
     <>
       { business && ( <>
         <Form id="business-form" onSubmit={handleFormSubmit}>
-            <Form.Group>
+            <Form.Group className="formGroup">
                 <Form.Label>Business Name</Form.Label>
                 <Form.Control 
                   placeholder="Business Name"
@@ -78,7 +78,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClos
             </Form.Group>
             {createOrEdit ? (
               <>
-                <Form.Group>
+                <Form.Group className="formGroup">
                   <Form.Label>Business URL</Form.Label>
                   <Form.Control
                     placeholder="Business URL"
@@ -91,7 +91,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClos
             ) : (
               <></>
             )}
-            <Form.Group>
+            <Form.Group className="formGroup">
                 <Form.Label>Logo (Please provide a URL)</Form.Label>
                 <Form.Control
                   placeholder="Logo"
@@ -100,7 +100,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClos
                   onChange={handleInputChange}
                 ></Form.Control>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="formGroup">
                 <Form.Label>Description</Form.Label>
                 <Form.Control 
                   placeholder="Description"
@@ -109,7 +109,7 @@ function BusinessEdit({ business, handleBusinessChange, createOrEdit, handleClos
                   onChange={handleInputChange}
                 ></Form.Control>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="formGroup">
                 <Form.Label>Phone</Form.Label>
                 <Form.Control
                   placeholder="Phone"
