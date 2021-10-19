@@ -163,7 +163,7 @@ function ProductForm({ product, handleProductChange, business }) {
 
   return (
     <div>
-     <Form encType="multipart/form-data" onSubmit={handleFormSubmit}>
+     <Form encType="multipart/form-data" onSubmit={handleFormSubmit} className="form-product-modal">
       <Form.Group className="mb-3" controlId="productId">
         <Form.Control type="hidden" value={product._id} />
       </Form.Group>

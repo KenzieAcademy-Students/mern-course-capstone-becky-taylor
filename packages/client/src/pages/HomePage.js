@@ -6,7 +6,7 @@ import LogInForm from 'components/LogInForm'
 import RegisterForm from 'components/RegisterForm'
 import BusinessEdit from 'components/BusinessEdit'
 import { Image } from 'react-bootstrap'
-
+import "./HomePage.css"
 
 
 
@@ -28,24 +28,29 @@ export default function HomePage(props) {
     console.dir(state)
     // this will get the businessurl value and redirect to the business page
   }
-
+  
   return (
-    <main>
+    <main className="container-fluid" id="home-container">
       <Image src='images/bongo_logo.png' />
-      <h1>BONGO</h1>
-      <h2 className="header"><p>"He can do it. So can you!"</p></h2>
+      <div className="container-sm p-5 my-5 bg-dark text-white" id="header-container">
+      <h1 className="col-md" id="header-logo">BONGO</h1>
+      <h2 className="col-md" id="header-quote"><p>"He can do it. So can you!"</p></h2>
+      </div>
+
+      <div className="row">
       {!isAuthenticated ? (
-        <>
+        <div className="col">
           <Button onClick={() => setShowRegisterModal(true)} >Register</Button> &nbsp; 
           <Button onClick={() => setShowLogInModal(true)} >Log In</Button>
-        </>
+        </div>
       ) : (
-        <>
-          <Button onClick={() => setShowRegisterBusinessModal(true)} >Register Your Business</Button> &nbsp;
-          <Button onClick={() => sendToBusiness()} >Edit Your Business</Button> &nbsp;
-          <Button onClick={() => signout()} >Log Out</Button> &nbsp;
-        </>
+        <div className="col">
+          <Button onClick={() => setShowRegisterBusinessModal(true)} className="btn btn-warning">Register Your Business</Button> &nbsp;
+          <Button onClick={() => sendToBusiness()} className="btn btn-secondary" id="edit-btn">Edit Your Business</Button> &nbsp;
+          <Button onClick={() => signout()} className="btn btn-danger" id="sign-out">Log Out</Button> &nbsp;
+        </div>
       )}
+      </div>
       
 
       <Modal size="lg" show={showLogInModal}
