@@ -18,7 +18,7 @@ function Category({ category, products, loggedIn, handleShowEditModalCat, handle
      <Card style={{ width: '100rem', border: '0px' }}>
         <Card.Body>          
           <b>{category.categoryName}</b> 
-          {loggedIn && (
+          {loggedIn && (category._id != 0) && (
             <div>
             <Button variant="success" 
               onClick={() => handleEditClick(category)} 
