@@ -9,7 +9,7 @@ const getUserToken = () => {
 
 // configure axios instance
 const instance = axios.create({
-  baseURL: `https://mern-course-capstone-becky-tay.herokuapp.com/${API_URL}/`,
+  baseURL: `https://mern-bongo.herokuapp.com/${API_URL}/`,
 })
 
 instance.defaults.headers.post['Content-Type'] = 'application/json'
